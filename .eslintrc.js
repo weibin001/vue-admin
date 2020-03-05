@@ -18,6 +18,12 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-array-constructor': 2,
+    'no-const-assign': 2,
+    'no-dupe-keys': 2,
+    'no-else-return': 2,
+    'no-empty': 2,
+    'comma-dangle': [2, 'never'],
     'space-before-function-paren': [2, 'never'],
     'vue/array-bracket-spacing': 'error',
     'vue/arrow-spacing': 'error',
@@ -31,6 +37,7 @@ module.exports = {
     'vue/match-component-file-name': 'error',
     'vue/object-curly-spacing': 'error',
     '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/interface-name-prefix': 0
   },
   overrides: [
     {

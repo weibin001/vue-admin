@@ -1,3 +1,6 @@
+import 'normalize.css'
+import '@/styles/index.scss'
+
 import ElementUI from 'element-ui'
 import Vue from 'vue'
 import App from './App.vue'

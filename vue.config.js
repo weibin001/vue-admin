@@ -34,12 +34,6 @@ module.exports = {
     config.resolve.alias.set('~', path.resolve(__dirname, './src'))
     config.when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-eval-source-map'))
     // config.plugin('workbox')
-    config.plugins.delete('progress')
-    config.plugin('simple-progress-webpack-plugin').use(require.resolve('simple-progress-webpack-plugin'), [
-      {
-        format: 'compact'
-      }
-    ])
     config.plugins.delete('prefetch')
     config.when(process.env.NODE_ENV === 'production', config => {
       config.optimization.splitChunks({
