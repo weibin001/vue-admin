@@ -21,11 +21,11 @@ module.exports = {
     // }
   },
   pluginOptions: {
-    'style-resource-loader': {
+    'style-resources-loader': {
       preProcessor: 'scss',
       patterns: [
-        path.resolve(__dirname, 'src/styles/_variables.scss'),
-        path.resolve(__dirname, 'src/styles/_mixins.scss')
+        path.resolve(__dirname, './src/styles/_mixins.scss'),
+        path.resolve(__dirname, './src/styles/_variables.scss')
       ]
     }
   },
