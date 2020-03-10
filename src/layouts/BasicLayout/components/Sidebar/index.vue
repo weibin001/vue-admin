@@ -1,6 +1,7 @@
 <template>
   <div class="has-logo">
     <SideBarLogo :isCollapse="isCollapse" />
+    <el-scrollbar wrap-class="scrollbar-wrapper">111</el-scrollbar>
   </div>
 </template>
 
@@ -27,11 +28,20 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .el-scrollbar {
   height: 100%;
+  ::v-deep {
+    .scrollbar-wrapper {
+      height: 100%;
+      overflow-x: hidden;
+    }
+    .el-scrollbar__view {
+      height: 100%;
+    }
+  }
 }
 
 .has-logo {
   .el-scrollbar {
-    height: calc(100% - 50px);
+    height: calc(100% - $sideBarLogoHeight);
   }
 }
 

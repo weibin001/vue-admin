@@ -1,8 +1,8 @@
 <template>
   <div class="app-wrapper" :class="classObj">
-    <div class="sidebar-container">sidebar</div>
+    <SideBar class="sidebar-container" />
     <div class="main-container">
-      <div>header</div>
+      <div @click="aaa">header</div>
       <div>main</div>
     </div>
   </div>
@@ -13,8 +13,12 @@ import { Component } from 'vue-property-decorator'
 import { AppModule, DeviceType } from '@/store/modules/app'
 import ResizeMixin from './mixins/resize'
 import { mixins } from 'vue-class-component'
+import { SideBar } from './components'
 @Component({
-  name: 'BasicLayout'
+  name: 'BasicLayout',
+  components: {
+    SideBar
+  }
 })
 export default class extends mixins(ResizeMixin) {
   get classObj() {
@@ -28,6 +32,10 @@ export default class extends mixins(ResizeMixin) {
 
   get sidebar() {
     return AppModule.sidebar
+  }
+
+  private aaa(): void {
+    AppModule.ToggleSideBar(!this.sidebar.opened)
   }
 }
 </script>
@@ -54,6 +62,17 @@ export default class extends mixins(ResizeMixin) {
     z-index: 1001;
     overflow: hidden;
     transition: width 0.28s;
+  }
+  &.hideSidebar {
+    .main-container {
+      margin-left: $sideBarCollapseWidth;
+    }
+    .sidebar-container {
+      width: $sideBarCollapseWidth;
+    }
+    .fixed-header {
+      width: calc(100% - $sideBarCollapseWidth);
+    }
   }
 }
 </style>
