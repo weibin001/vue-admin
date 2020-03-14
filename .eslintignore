@@ -2,3 +2,4 @@ dist/*.js
 src/assets
 src/pwa
 tests/unit/coverage
+node_modules

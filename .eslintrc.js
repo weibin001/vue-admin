@@ -36,7 +36,8 @@ module.exports = {
     'vue/key-spacing': 'error',
     'vue/match-component-file-name': 'error',
     '@typescript-eslint/no-var-requires': 0,
-    '@typescript-eslint/interface-name-prefix': 0
+    '@typescript-eslint/interface-name-prefix': 0,
+    '@typescript-eslint/no-explicit-any': 'off'
   },
   overrides: [
     {

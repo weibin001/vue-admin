@@ -1,6 +1,6 @@
 interface ISettings {
   title: string
-  showSetting: boolean
+  showSettings: boolean
   showTagsView: boolean
   fixedHeader: boolean
   showSidebarLogo: boolean
@@ -11,7 +11,7 @@ interface ISettings {
 //默认配置
 const settings: ISettings = {
   title: 'vue-admin',
-  showSetting: false,
+  showSettings: false,
   showTagsView: true,
   fixedHeader: false,
   showSidebarLogo: true,

@@ -1,14 +1,18 @@
 <template>
-  <div class="has-logo">
+  <div :class="{ 'has-logo': showLogo }">
     <SideBarLogo :isCollapse="isCollapse" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">111</el-scrollbar>
+    <el-scrollbar wrap-class="scrollbar-wrapper">
+      <el-menu :default-active="activeMenu" />
+    </el-scrollbar>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
+import settings from '@/settings.ts'
 import SideBarLogo from './SideBarLogo.vue'
+// import variables from '@/styles/_variables.scss'
 @Component({
   name: 'SideBar',
   components: {
@@ -16,11 +20,18 @@ import SideBarLogo from './SideBarLogo.vue'
   }
 })
 export default class extends Vue {
-  get sidebar() {
+  private get sidebar() {
     return AppModule.sidebar
   }
-  get isCollapse() {
+  private get isCollapse(): boolean {
     return !this.sidebar.opened
+  }
+  private get activeMenu(): string {
+    const { meta, path } = this.$route
+    return meta.activeMenu || path
+  }
+  private get showLogo(): boolean {
+    return settings.showSettings
   }
 }
 </script>
