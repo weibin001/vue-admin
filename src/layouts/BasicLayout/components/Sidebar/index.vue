@@ -1,8 +1,26 @@
 <template>
   <div :class="{ 'has-logo': showLogo }">
-    <SideBarLogo :isCollapse="isCollapse" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu :default-active="activeMenu" />
+    <SidebarLogo v-if="showLogo" :isCollapse="isCollapse" />
+    <el-scrollbar wrap-class="scrollbar-wrapper" :noresize="true">
+      <el-menu
+        ref="el-menu"
+        :default-active="activeMenu"
+        :collapse="isCollapse"
+        :background-color="variables.menuBg"
+        :text-color="variables.menuText"
+        :active-text-color="menuActiveTextColor"
+        :collapse-transition="false"
+        @select="selectMenu"
+      >
+        <SidebarItem
+          v-for="item in routes"
+          :key="item.path"
+          :item="item"
+          base-path="/"
+          :is-first-level="true"
+          :isCollapse="isCollapse"
+        ></SidebarItem>
+      </el-menu>
     </el-scrollbar>
   </div>
 </template>
@@ -10,16 +28,20 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
-import settings from '@/settings.ts'
-import SideBarLogo from './SideBarLogo.vue'
-// import variables from '@/styles/_variables.scss'
+import { SettingsModule } from '@/store/modules/settings'
+import { PermissionModule } from '@/store/modules/permission'
+import SidebarLogo from './SidebarLogo.vue'
+import SidebarItem from './SidebarItem.vue'
+import variables from '@/styles/_variables.scss'
 @Component({
   name: 'SideBar',
   components: {
-    SideBarLogo
+    SidebarLogo,
+    SidebarItem
   }
 })
 export default class extends Vue {
+  private activeMenus = []
   private get sidebar() {
     return AppModule.sidebar
   }
@@ -31,7 +53,23 @@ export default class extends Vue {
     return meta.activeMenu || path
   }
   private get showLogo(): boolean {
-    return settings.showSettings
+    return SettingsModule.showSidebarLogo
+  }
+  private get menuActiveTextColor() {
+    if (SettingsModule.sidebarTextTheme) {
+      return SettingsModule.theme
+    }
+    return variables.menuActiveText
+  }
+  private get variables() {
+    return variables
+  }
+  private get routes() {
+    return PermissionModule.routes
+  }
+
+  private selectMenu(index: string, indexPath: Array<string>) {
+    console.log(index, indexPath)
   }
 }
 </script>
@@ -47,18 +85,27 @@ export default class extends Vue {
     .el-scrollbar__view {
       height: 100%;
     }
+    .el-scrollbar__bar {
+      &.is-vertical {
+        right: 0px;
+      }
+
+      &.is-horizontal {
+        display: none;
+      }
+    }
   }
 }
 
 .has-logo {
   .el-scrollbar {
-    height: calc(100% - $sideBarLogoHeight);
+    height: calc(100% - #{$sideBarLogoHeight});
   }
 }
 
 .el-menu {
   border: none;
-  height: 100%;
+  // height: 100%;
   width: 100% !important;
 }
 </style>

@@ -1,12 +1,12 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { default as VueRouter, RouteConfig } from 'vue-router'
 import BasicLayout from '@/layouts/BasicLayout/index.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '*',
     component: BasicLayout
   }
   // {
@@ -23,6 +23,12 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
+  scrollBehavior: (to: RouteConfig, from: RouteConfig, savedPosition) => {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { x: 0, y: 0 }
+  },
   routes
 })
 

@@ -18,7 +18,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import settings from '@/settings'
 @Component({
-  name: 'SideBarLogo'
+  name: 'SidebarLogo'
 })
 export default class extends Vue {
   @Prop({ required: true }) private isCollapse!: boolean
