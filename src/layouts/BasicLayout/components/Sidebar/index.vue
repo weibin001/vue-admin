@@ -41,7 +41,7 @@ import variables from '@/styles/_variables.scss'
   }
 })
 export default class extends Vue {
-  private activeMenus = []
+  private activeMenus: string[] = []
   private get sidebar() {
     return AppModule.sidebar
   }
@@ -68,8 +68,9 @@ export default class extends Vue {
     return PermissionModule.routes
   }
 
-  private selectMenu(index: string, indexPath: Array<string>) {
-    console.log(index, indexPath)
+  private selectMenu(index: string, indexPath: string[]) {
+    // console.log(index, indexPath)
+    this.activeMenus = index === this.$route.path ? indexPath : this.activeMenus
   }
 }
 </script>
@@ -105,7 +106,6 @@ export default class extends Vue {
 
 .el-menu {
   border: none;
-  // height: 100%;
   width: 100% !important;
 }
 </style>

@@ -31,7 +31,7 @@ export default class extends Vue {
         {this.item.children.length > 0 ? (
           <el-submenu index={this.resolvePath(this.item.path)}>
             <template slot="title">
-              {this.item.icon && <svg-icon name={this.item.icon} />}
+              {this.item.icon && <svg-icon name={this.item.icon} style={{}} />}
               <span class="el-submenu--title" slot="title">
                 {this.item.title}
               </span>
