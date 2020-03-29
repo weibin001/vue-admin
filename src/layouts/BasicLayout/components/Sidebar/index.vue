@@ -12,9 +12,9 @@
         :collapse-transition="false"
       >
         <SidebarItem
-          v-for="item in routes"
-          :key="item.path"
-          :item="item"
+          v-for="route in routes"
+          :key="route.path"
+          :item="route"
           base-path="/"
           :is-first-level="true"
           :isCollapse="isCollapse"
