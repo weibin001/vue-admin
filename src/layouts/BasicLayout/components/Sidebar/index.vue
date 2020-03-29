@@ -10,7 +10,6 @@
         :text-color="variables.menuText"
         :active-text-color="menuActiveTextColor"
         :collapse-transition="false"
-        @select="selectMenu"
       >
         <SidebarItem
           v-for="item in routes"
@@ -67,11 +66,6 @@ export default class extends Vue {
   private get routes() {
     return PermissionModule.routes
   }
-
-  private selectMenu(index: string, indexPath: string[]) {
-    // console.log(index, indexPath)
-    this.activeMenus = index === this.$route.path ? indexPath : this.activeMenus
-  }
 }
 </script>
 
@@ -100,7 +94,7 @@ export default class extends Vue {
 
 .has-logo {
   .el-scrollbar {
-    height: calc(100% - #{$sideBarLogoHeight});
+    height: calc(100% - #{$navbarHeight});
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <a v-if="isExternal(to)" :href="to" target="_blank"> <slot /> </a>
-  <router-link v-else :to="to"><slot /> </router-link>
+  <router-link v-else :to="to" linkActiveClass><slot /> </router-link>
 </template>
 
 <script lang="ts">

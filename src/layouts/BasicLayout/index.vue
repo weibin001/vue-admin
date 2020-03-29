@@ -2,7 +2,7 @@
   <div class="app-wrapper" :class="classObj">
     <SideBar class="sidebar-container" />
     <div class="main-container">
-      <div @click="aaa">header</div>
+      <Navbar />
       <div>main</div>
     </div>
   </div>
@@ -13,11 +13,12 @@ import { Component } from 'vue-property-decorator'
 import { AppModule, DeviceType } from '@/store/modules/app'
 import ResizeMixin from './mixins/resize'
 import { mixins } from 'vue-class-component'
-import { SideBar } from './components'
+import { SideBar, Navbar } from './components'
 @Component({
   name: 'BasicLayout',
   components: {
-    SideBar
+    SideBar,
+    Navbar
   }
 })
 export default class extends mixins(ResizeMixin) {
@@ -32,10 +33,6 @@ export default class extends mixins(ResizeMixin) {
 
   get sidebar() {
     return AppModule.sidebar
-  }
-
-  private aaa(): void {
-    AppModule.ToggleSideBar(!this.sidebar.opened)
   }
 }
 </script>

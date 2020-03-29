@@ -38,18 +38,21 @@ export default class extends Vue {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: $sideBarLogoHeight;
-  line-height: $sideBarLogoHeight;
+  height: $navbarHeight;
+  // line-height: $navbarHeight;
   background: $sideBarLogoBg;
   text-align: center;
   overflow: hidden;
   .sidebar-logo-link {
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .sidebar-logo {
-      width: $sideBarLogoHeight * 0.6;
-      height: $sideBarLogoHeight * 0.6;
-      vertical-align: middle;
+      width: $navbarHeight * 0.6;
+      height: $navbarHeight * 0.6;
+      // vertical-align: middle;
       margin-right: 12px;
     }
     .sidebar-title {
@@ -57,7 +60,7 @@ export default class extends Vue {
       margin: 0;
       color: $sideBarLogoText;
       font-weight: 600;
-      line-height: $sideBarLogoHeight;
+      // line-height: $navbarHeight;
       font-size: 16px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
