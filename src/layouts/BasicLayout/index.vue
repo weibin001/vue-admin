@@ -3,7 +3,9 @@
     <SideBar class="sidebar-container" />
     <div class="main-container">
       <Navbar />
-      <div>main</div>
+      <div>
+        <el-button @click="login">login</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -11,6 +13,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { AppModule, DeviceType } from '@/store/modules/app'
+import { UserModule } from '@/store/modules/user'
 import ResizeMixin from './mixins/resize'
 import { mixins } from 'vue-class-component'
 import { SideBar, Navbar } from './components'
@@ -33,6 +36,10 @@ export default class extends mixins(ResizeMixin) {
 
   get sidebar() {
     return AppModule.sidebar
+  }
+
+  private async login(): Promise<void> {
+    await UserModule.Login()
   }
 }
 </script>
