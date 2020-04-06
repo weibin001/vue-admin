@@ -3,6 +3,8 @@ module.exports = {
   publicPath: '/',
   filenameHashing: true,
   lintOnSave: process.env.NODE_ENV === 'development',
+  transpileDependencies: [' vuex-module-decorators '],
+  productionSourceMap: false,
   devServer: {
     port: 8080,
     open: 'Chrome', //boolean | string 是否自动打开指定或者默认浏览器
@@ -34,7 +36,7 @@ module.exports = {
     config.resolve.alias.set('~', path.resolve(__dirname, './src'))
     config.when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-eval-source-map'))
     // config.plugin('workbox')
-    config.plugins.delete('prefetch')
+    // config.plugins.delete('prefetch')
     config.when(process.env.NODE_ENV === 'production', config => {
       config.optimization.splitChunks({
         /*chunks:

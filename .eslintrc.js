@@ -16,6 +16,9 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    eqeqeq: [2, 'always'], // 要求使用 === 和 !==
+    semi: [2, 'never'], // 要求或禁止使用分号代替 ASI
+    quotes: [2, 'single'], // 强制使用一致的反勾号、双引号或单引号
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-array-constructor': 2,
@@ -24,7 +27,14 @@ module.exports = {
     'no-else-return': 2,
     'no-empty': 2,
     'comma-dangle': [2, 'never'],
-    'space-before-function-paren': [2, 'never'],
+    'space-before-function-paren': [
+      2,
+      {
+        anonymous: 'never',
+        named: 'never',
+        asyncArrow: 'always'
+      }
+    ],
     'vue/array-bracket-spacing': 'error',
     'vue/arrow-spacing': 'error',
     'vue/block-spacing': 'error',

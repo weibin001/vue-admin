@@ -11,8 +11,8 @@ const service: AxiosInstance = axios.create({
 service.interceptors.request.use(
   config => {
     // Add X-Access-Token header to every request, you can add other custom headers here
-    if (UserModule.token) {
-      config.headers['X-Access-Token'] = UserModule.token || ''
+    if (UserModule.accessToken) {
+      config.headers['X-Access-Token'] = UserModule.accessToken || ''
     }
     return config
   },
@@ -24,13 +24,19 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const { code, message } = response.data
-    if (code !== 20000) {
+    if (code !== 20000 && code !== 40103) {
       Message({
         message: message || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
       return Promise.reject(new Error(message || 'Error'))
+    } else if (code === 40103) {
+      // refresh token
+      return UserModule.RefreshToken().then(() =>
+        // reload api
+        service(response.config)
+      )
     }
     return response.data
   },

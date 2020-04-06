@@ -18,12 +18,12 @@
             size="small"
           ></el-avatar>
           <span style="margin-right:5px">Hi!</span>
-          <span>黄金糕</span>
+          <span>{{ name }}</span>
         </span>
 
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item divided>退出登录</el-dropdown-item>
+          <el-dropdown-item divided @click.native="logOut">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -33,6 +33,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { AppModule, DeviceType } from '@/store/modules/app'
+import { UserModule } from '@/store/modules/user'
 @Component({
   name: 'Navbar'
 })
@@ -43,8 +44,16 @@ export default class extends Vue {
   get device(): DeviceType {
     return AppModule.device
   }
+  get name(): string {
+    return UserModule.userInfo.name
+  }
+
   private toggleSideBar(): void {
     AppModule.ToggleSideBar(!this.sidebar.opened)
+  }
+  private async logOut(): Promise<void> {
+    await UserModule.LogOut()
+    this.$router.push('/login')
   }
 }
 </script>
@@ -61,7 +70,7 @@ export default class extends Vue {
   font-size: 14px;
   .hover-effect {
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background-color 0.3s;
 
     &:hover {
       background: rgba(0, 0, 0, 0.025);

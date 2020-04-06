@@ -4,9 +4,14 @@ import BasicLayout from '@/layouts/BasicLayout/index.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+const routes: RouteConfig[] = [
   {
-    path: '*',
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ /* webpackPrefetch: true  */ '@/views/login/index.vue')
+  },
+  {
+    path: '/',
     component: BasicLayout
   }
   // {
@@ -16,7 +21,7 @@ const routes = [
   //   // this generates a separate chunk (about.[hash].js) for this route
   //   // which is lazy-loaded when the route is visited.
   //   //webpackPrefetch 是否开启预加载组件
-  //   component: () => import(/* webpackChunkName: "about" */ /* webpackPrefetch: false  */ '../views/About.vue')
+  //   component: () => import(/* webpackChunkName: "about" */ /* webpackPrefetch: true  */ '../views/About.vue')
   // }
 ]
 

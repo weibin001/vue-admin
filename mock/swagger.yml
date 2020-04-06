@@ -55,7 +55,7 @@ paths:
                           $ref: '#/components/schemas/User'
         401:
           $ref: '#/components/responses/Unauthorized'
-  /userInfo:
+  /users/userInfo:
     get:
       tags:
         - users
@@ -70,6 +70,28 @@ paths:
           description: Used to filter users by matched username substring
           schema:
             type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    type: object
+        401:
+          $ref: '#/components/responses/Unauthorized'
+  /users/refreshToken:
+    get:
+      tags:
+        - users
+      summary: Get new token
+      description: Return token
+      operationId: refreshToken
       responses:
         200:
           description: OK
