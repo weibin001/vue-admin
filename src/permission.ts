@@ -13,7 +13,6 @@ router.beforeEach(async (to: Route, from: Route, next: Function) => {
     } else {
       if (UserModule.userInfo.roles.length === 0) {
         try {
-          console.log(11)
           await UserModule.GetUserInfo()
           next({ ...to, replace: true })
         } catch (error) {

@@ -8,5 +8,4 @@ export const login = (data: ILoginForm) =>
   })
 
 export const getUserInfo = () => service({ url: '/users/userInfo', method: 'get' })
-export const refreshToken = (params: { token: string }) =>
-  service({ url: '/users/refreshToken', method: 'get', params })
+export const refreshToken = (data: { token: string }) => service({ url: '/users/refreshToken', method: 'post', data })

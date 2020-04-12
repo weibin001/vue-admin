@@ -75,7 +75,6 @@ class User extends VuexModule implements IUserState {
   public async RefreshToken(): Promise<object> {
     const { data } = await refreshToken({ token: this.refreshToken })
     return data
-    // return { accessToken: '222', refreshToken: '333' }
   }
   @Action({ commit: 'SET_USERINFO' })
   public async GetUserInfo(): Promise<void> {

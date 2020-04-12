@@ -1,5 +1,5 @@
 import { default as axios, AxiosInstance } from 'axios'
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 import { UserModule } from '@/store/modules/user'
 
 const service: AxiosInstance = axios.create({
@@ -24,19 +24,34 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const { code, message } = response.data
-    if (code !== 20000 && code !== 40103) {
-      Message({
-        message: message || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
+    if (code !== 20000) {
+      if (code === 50004) {
+        return UserModule.RefreshToken()
+          .then(() =>
+            // reload api
+            service(response.config)
+          )
+          .catch(() => {
+            UserModule.LogOut()
+            location.reload() // To prevent bugs from vue-router
+          })
+      } else if (code === 50002) {
+        return MessageBox.confirm('你已被登出，请重新登录', '警告', {
+          confirmButtonText: '确定',
+          showCancelButton: false,
+          type: 'warning'
+        }).then(() => {
+          UserModule.LogOut()
+          location.reload() // To prevent bugs from vue-router
+        })
+      }
+      message &&
+        Message({
+          message: message,
+          type: 'error',
+          duration: 5 * 1000
+        })
       return Promise.reject(new Error(message || 'Error'))
-    } else if (code === 40103) {
-      // refresh token
-      return UserModule.RefreshToken().then(() =>
-        // reload api
-        service(response.config)
-      )
     }
     return response.data
   },

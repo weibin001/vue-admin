@@ -86,7 +86,7 @@ paths:
         401:
           $ref: '#/components/responses/Unauthorized'
   /users/refreshToken:
-    get:
+    post:
       tags:
         - users
       summary: Get new token

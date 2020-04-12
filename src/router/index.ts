@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { default as VueRouter, RouteConfig } from 'vue-router'
+import { default as VueRouter, Route, RouteConfig } from 'vue-router'
 import BasicLayout from '@/layouts/BasicLayout/index.vue'
 
 Vue.use(VueRouter)
@@ -28,7 +28,7 @@ const routes: RouteConfig[] = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  scrollBehavior: (to: RouteConfig, from: RouteConfig, savedPosition) => {
+  scrollBehavior: (to: Route, from: Route, savedPosition) => {
     if (savedPosition) {
       return savedPosition
     }
