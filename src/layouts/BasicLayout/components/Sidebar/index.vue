@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'has-logo': showLogo }">
     <SidebarLogo v-if="showLogo" :isCollapse="isCollapse" />
-    <el-scrollbar wrap-class="scrollbar-wrapper" :noresize="true">
+    <el-scrollbar wrap-class="scrollbar-wrapper" :noresize="true" style="">
       <el-menu
         ref="el-menu"
         :default-active="activeMenu"
@@ -15,7 +15,7 @@
           v-for="route in routes"
           :key="route.path"
           :item="route"
-          base-path="/"
+          :base-path="route.path"
           :is-first-level="true"
           :isCollapse="isCollapse"
         ></SidebarItem>
@@ -64,7 +64,7 @@ export default class extends Vue {
     return variables
   }
   private get routes() {
-    return PermissionModule.routes
+    return PermissionModule.dynamicRoutes
   }
 }
 </script>
@@ -101,5 +101,6 @@ export default class extends Vue {
 .el-menu {
   border: none;
   width: 100% !important;
+  height: 100%;
 }
 </style>

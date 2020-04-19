@@ -2,10 +2,10 @@
   <div class="app-wrapper" :class="classObj">
     <SideBar class="sidebar-container" />
     <div class="main-container">
-      <Navbar />
       <div>
-        <el-button @click="login">login</el-button>
+        <Navbar />
       </div>
+      <AppMain />
     </div>
   </div>
 </template>
@@ -16,12 +16,13 @@ import { AppModule, DeviceType } from '@/store/modules/app'
 import { UserModule } from '@/store/modules/user'
 import ResizeMixin from './mixins/resize'
 import { mixins } from 'vue-class-component'
-import { SideBar, Navbar } from './components'
+import { SideBar, Navbar, AppMain } from './components'
 @Component({
   name: 'BasicLayout',
   components: {
     SideBar,
-    Navbar
+    Navbar,
+    AppMain
   }
 })
 export default class extends mixins(ResizeMixin) {

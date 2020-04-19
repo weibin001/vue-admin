@@ -1,6 +1,7 @@
 <script lang="tsx">
 import path from 'path'
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { RouteConfig } from 'vue-router'
 import SidebarLink from './SidebarLink.vue'
 import { isExternal } from '@/utils/validate'
 @Component({
@@ -10,7 +11,7 @@ import { isExternal } from '@/utils/validate'
   }
 })
 export default class extends Vue {
-  @Prop({ required: true }) readonly item: any
+  @Prop({ required: true }) readonly item!: RouteConfig
   @Prop({ default: false }) readonly isCollapse?: boolean
   @Prop({ default: '' }) readonly basePath!: string
   @Prop({ default: false }) readonly isFirstLevel!: boolean
@@ -24,34 +25,69 @@ export default class extends Vue {
       path.resolve(this.basePath, routePath)
     )
   }
+  //是否显示子级菜单
+  private get alwaysShowRootMenu(): boolean {
+    const { meta } = this.item
+    return meta && meta.alwaysShow
+  }
+  // 获取满足条件子菜单数量
+  private get showChildNumber(): number {
+    const { children } = this.item
+    if (children) {
+      return this.getChild(children).length
+    }
+    return 0
+  }
+  // 获取子菜单（当子级菜单只有一个或满足条件只有一个时
+  private get theOnlyOneChild() {
+    if (this.showChildNumber > 1) return null
+    if (this.item.children) {
+      const [child]: RouteConfig[] = this.getChild(this.item.children)
+      if (child) {
+        return child.children && this.getChild(child.children).length ? null : child
+      }
+    }
+    return { ...this.item, path: '' }
+  }
+  // 过滤菜单
+  public getChild(menu: RouteConfig[]) {
+    const childMenu = menu.filter(item => !item.meta || !item.meta.hidden)
+    return childMenu
+  }
 
   render() {
-    return this.item.meta && !this.item.meta.hidden ? (
+    const { children = [], meta = {} } = this.item
+    return !meta.hidden ? (
       <div class={[this.isCollapse ? 'collapse-mode' : 'expand-mode', { 'first-level': this.isFirstLevel }]}>
-        {this.item.children.length > 0 ? (
+        {!this.alwaysShowRootMenu && this.theOnlyOneChild ? (
+          <sidebar-link
+            to={
+              this.isExternal(this.theOnlyOneChild.path)
+                ? this.theOnlyOneChild.path
+                : this.resolvePath(this.theOnlyOneChild.path)
+            }>
+            <el-menu-item
+              class={{ 'submenu-title-noDropdown': this.isFirstLevel }}
+              index={this.resolvePath(this.theOnlyOneChild.path)}>
+              {this.theOnlyOneChild.meta.icon ? <svg-icon name={this.theOnlyOneChild.meta.icon} /> : ''}
+              <span slot="title">{this.theOnlyOneChild.meta.title}</span>
+            </el-menu-item>
+          </sidebar-link>
+        ) : (
           <el-submenu index={this.resolvePath(this.item.path)}>
             <template slot="title">
-              {this.item.icon && <svg-icon name={this.item.icon} />}
+              {meta.icon && <svg-icon name={meta.icon} />}
               <span class="el-submenu--title" slot="title">
-                {this.item.title}
+                {meta.title}
               </span>
             </template>
-            {this.item.children.map((childrenItem: any) => (
+            {children.map((childrenItem: any) => (
               <sidebar-item
                 key={childrenItem.path}
                 item={childrenItem}
-                basePath={this.resolvePath(this.item.path)}></sidebar-item>
+                basePath={this.resolvePath(childrenItem.path)}></sidebar-item>
             ))}
           </el-submenu>
-        ) : (
-          <sidebar-link to={this.isExternal(this.item.path) ? this.item.path : this.resolvePath(this.item.path)}>
-            <el-menu-item
-              class={{ 'submenu-title-noDropdown': this.isFirstLevel }}
-              index={this.resolvePath(this.item.path)}>
-              {this.item.icon ? <svg-icon name={this.item.icon} /> : ''}
-              <span slot="title"> {this.item.title}</span>
-            </el-menu-item>
-          </sidebar-link>
         )}
       </div>
     ) : (
@@ -63,9 +99,11 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 .svg-icon {
-  margin-right: 16px;
+  margin-right: 8px;
 }
-
+.el-submenu.is-active ::v-deep > .el-submenu__title {
+  color: $subMenuActiveText !important;
+}
 .collapse-mode {
   .svg-icon {
     margin-left: 20px;

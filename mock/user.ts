@@ -1,5 +1,6 @@
 import { Response, Request } from 'express'
-export const userList = [
+import { IRoute, routes as allRoutes } from './routes'
+const userList = [
   {
     id: 0,
     account: 'admin',
@@ -188,9 +189,14 @@ export const getUserInfo = (req: Request, res: Response) => {
       data: null
     })
   }
+  const routes: IRoute[] = userInfo.roles.reduce(
+    (result: IRoute[], item: string) =>
+      Object.keys(allRoutes).includes(item) ? [...result, ...allRoutes[item]] : result,
+    [] as IRoute[]
+  )
   return res.json({
     code: 20000,
-    data: userInfo,
+    data: { ...userInfo, routes },
     message: ''
   })
 }

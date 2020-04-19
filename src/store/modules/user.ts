@@ -1,27 +1,13 @@
 import store from '@/store'
 import { VuexModule, Action, Mutation, Module, getModule } from 'vuex-module-decorators'
+import { PermissionModule } from './permission'
 import { getCookie, setCookie, removeCookie } from '@/utils/cookies'
 import { login, getUserInfo, refreshToken } from '@/api/users'
-import { ILoginForm } from '@/api/types'
+import { ILoginForm, IToken, IUserInfo } from '@/api/types'
 
-interface IUserState {
-  accessToken: string
-  refreshToken?: string | null
+interface IUserState extends IToken {
   userInfo: IUserInfo
   // msg?:
-}
-
-export interface IUserInfo {
-  id: string
-  account: string
-  password: string
-  name: string
-  roles: string[]
-  // menu:
-  email?: string
-  tellphone?: string
-  avatar?: string
-  [propsName: string]: any
 }
 
 @Module({ dynamic: true, name: 'user', store })
@@ -33,7 +19,8 @@ class User extends VuexModule implements IUserState {
     account: '',
     password: '',
     name: '',
-    roles: []
+    roles: [],
+    routes: []
   }
   @Mutation
   private SET_TOKEN({ accessToken = '', refreshToken = '' }): void {
@@ -57,7 +44,8 @@ class User extends VuexModule implements IUserState {
       account: '',
       password: '',
       name: '',
-      roles: []
+      roles: [],
+      routes: []
     }
   }
 
@@ -79,6 +67,7 @@ class User extends VuexModule implements IUserState {
   @Action({ commit: 'SET_USERINFO' })
   public async GetUserInfo(): Promise<void> {
     const { data } = await getUserInfo()
+    await PermissionModule.GenerateRoutes(data.routes)
     return data
   }
   @Action

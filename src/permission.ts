@@ -3,6 +3,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Route } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
+import { PermissionModule } from '@/store/modules/permission'
 
 NProgress.configure({ showSpinner: false })
 router.beforeEach(async (to: Route, from: Route, next: Function) => {
@@ -14,6 +15,7 @@ router.beforeEach(async (to: Route, from: Route, next: Function) => {
       if (UserModule.userInfo.roles.length === 0) {
         try {
           await UserModule.GetUserInfo()
+          router.addRoutes(PermissionModule.dynamicRoutes)
           next({ ...to, replace: true })
         } catch (error) {
           UserModule.LogOut()
