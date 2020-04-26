@@ -1,5 +1,5 @@
 <template>
-  <div>article-list</div>
+  <div @click="$router.push({ name: 'ArticleDetail', params: { id: 1 } })">article-list</div>
 </template>
 
 <script lang="ts">

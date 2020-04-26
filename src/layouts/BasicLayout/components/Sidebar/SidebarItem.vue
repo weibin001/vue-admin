@@ -104,6 +104,17 @@ export default class extends Vue {
 .el-submenu.is-active ::v-deep > .el-submenu__title {
   color: $subMenuActiveText !important;
 }
+.expand-mode {
+  .el-submenu > .el-submenu__title,
+  .el-submenu .el-menu-item {
+    min-width: $sideBarWidth !important;
+    background-color: $subMenuBg !important;
+
+    &:hover {
+      background-color: $subMenuHover !important;
+    }
+  }
+}
 .collapse-mode {
   .svg-icon {
     margin-left: 20px;

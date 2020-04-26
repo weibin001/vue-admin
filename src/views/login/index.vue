@@ -44,7 +44,9 @@ export default class extends Vue {
     ;(this.$refs.loginForm as Form).validate(async (valid: boolean) => {
       if (!valid) return false
       await UserModule.Login(this.form)
-      this.$router.push({ path: '/' })
+      this.$route.query?.redirect
+        ? this.$router.push({ path: this.$route.query?.redirect as string })
+        : this.$router.push({ path: '/' })
     })
   }
 

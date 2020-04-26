@@ -5,7 +5,7 @@ import defaultSettings from '@/settings'
 
 export interface ISetttingsState {
   theme: string
-  fixHeader: boolean
+  fixedHeader: boolean
   showSettings: boolean
   showTagsView: boolean
   showSidebarLogo: boolean
@@ -15,7 +15,7 @@ export interface ISetttingsState {
 @Module({ store, dynamic: true, name: 'Setttings' })
 class Settings extends VuexModule implements ISetttingsState {
   public theme = elementVariables.theme
-  public fixHeader = defaultSettings.fixedHeader
+  public fixedHeader = defaultSettings.fixedHeader
   public showSettings = defaultSettings.showSettings
   public showTagsView = defaultSettings.showTagsView
   public showSidebarLogo = defaultSettings.showSidebarLogo

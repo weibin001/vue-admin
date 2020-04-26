@@ -55,13 +55,14 @@ service.interceptors.response.use(
     }
     return response.data
   },
-  error => {
+  ({ message, response }) => {
+    console.log(response)
     Message({
-      message: error.message,
+      message: response?.data?.message || message,
       type: 'error',
       duration: 5 * 1000
     })
-    return Promise.reject(error)
+    return Promise.reject({ message, response })
   }
 )
 

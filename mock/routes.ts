@@ -19,7 +19,7 @@ export type IRoute = {
 
 const adminRoutes: IRoute[] = [
   {
-    path: '',
+    path: '/',
     component: 'Layout',
     redirect: 'dashboard',
     meta: {
@@ -53,8 +53,7 @@ const adminRoutes: IRoute[] = [
         component: 'article/list',
         name: 'Article',
         meta: {
-          title: 'article',
-          affix: true
+          title: 'article'
         }
       },
       {
@@ -63,7 +62,6 @@ const adminRoutes: IRoute[] = [
         name: 'ArticleDetail',
         meta: {
           title: 'articleDetail',
-          affix: true,
           hidden: true
         }
       },
@@ -72,11 +70,17 @@ const adminRoutes: IRoute[] = [
         component: 'article/publish',
         name: 'PublishArticle',
         meta: {
-          title: 'publishArticle',
-          affix: true
+          title: 'publishArticle'
         }
       }
     ]
+  },
+  {
+    path: 'https://element.eleme.cn/#/zh-CN',
+    meta: {
+      title: 'ele',
+      icon: 'example'
+    }
   }
 ]
 

@@ -49,7 +49,7 @@ export default class extends Vue {
   }
 
   private toggleSideBar(): void {
-    AppModule.ToggleSideBar(!this.sidebar.opened)
+    AppModule.ToggleSideBar(false)
   }
   private async logOut(): Promise<void> {
     await UserModule.LogOut()

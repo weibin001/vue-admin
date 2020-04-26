@@ -34,6 +34,12 @@ module.exports = {
   chainWebpack: config => {
     // 设置全局 快捷路径或方法名 config.resolve.alias.set('~', path.resolve(__dirname, './src')).set('$','jquery/dist/jquery.min.js')
     config.resolve.alias.set('~', path.resolve(__dirname, './src'))
+    // base64
+    config.module
+      .rule('images')
+      .use('url-loader')
+      .loader('url-loader')
+      .tap(options => Object.assign(options, { limit: 20000 }))
     config.when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-eval-source-map'))
     // config.plugin('workbox')
     // config.plugins.delete('prefetch')
