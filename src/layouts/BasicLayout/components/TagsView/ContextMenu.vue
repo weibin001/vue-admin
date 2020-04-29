@@ -1,13 +1,7 @@
 <template>
   <transition name="el-fade-in">
-    <ul class="context-menu" v-show="visible" :style="styleObj">
-      <li class="context-menu-item">1111</li>
-      <li class="context-menu-item">1111</li>
-      <el-divider></el-divider>
-      <li class="context-menu-item">1111</li>
-      <li class="context-menu-item">1111</li>
-      <li class="context-menu-item">1111</li>
-      <li class="context-menu-item">1111</li>
+    <ul class="context-menu" v-show="visible">
+      <slot />
     </ul>
   </transition>
 </template>
@@ -19,9 +13,6 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 })
 export default class extends Vue {
   @Prop({ required: true, type: Boolean, default: false }) visible!: boolean
-  // @Prop({ type: Boolean }) appendToBody = true
-  @Prop({ type: Number }) offsetLeft = 0
-  @Prop({ type: Number }) offsetTop = 0
   public init = this.visible
   @Watch('visible')
   onVisibleChange(val: boolean) {
@@ -30,13 +21,6 @@ export default class extends Vue {
       this.$emit('open')
     } else {
       this.$emit('close')
-    }
-  }
-
-  get styleObj() {
-    return {
-      left: this.offsetLeft + 'px',
-      top: this.offsetTop + 'px'
     }
   }
 
@@ -53,21 +37,35 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .context-menu {
   position: absolute;
-  width: 160px;
+  min-width: 100px;
   background-color: #fff;
-  border: 1px solid #ebeef5;
+  padding: 5px 0;
+  border: 1px solid #dcdfe6;
   border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   z-index: 2000;
-  &-item {
+  ::v-deep &-item {
     list-style: none;
-    line-height: 30px;
-    padding: 0 20px;
+    line-height: 24px;
+    padding: 0 15px;
     margin: 0;
     font-size: 14px;
     color: #606266;
-    cursor: pointer;
     outline: none;
+    user-select: none;
+    outline: none;
+    &:hover {
+      background: #eee;
+      transition: background-color 0.3s;
+    }
+  }
+  ::v-deep &-item__disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  ::v-deep .el-divider--horizontal {
+    height: 1.5px;
+    margin: 5px 0;
   }
 }
 </style>

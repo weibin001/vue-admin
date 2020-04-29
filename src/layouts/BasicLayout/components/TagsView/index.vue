@@ -9,7 +9,10 @@
         :key="tag.path"
         @contextmenu.prevent.stop.native="openContextMenu($event, tag)"
       >
-        <span class="tags-view-title">{{ tag.meta.title }}</span>
+        <svg-icon :name="tag.meta && tag.meta.icon ? tag.meta.icon : 'earth'" />
+        <span class="tags-view-title">
+          {{ tag.meta.title }}
+        </span>
         <div class="tags-view-icon-wrapper">
           <span v-if="!tag.meta.affix" class="tags-view-icon" @click.prevent.stop="closeSelectedTag(tag)">
             <i class="el-icon-close"></i>
@@ -17,7 +20,20 @@
         </div>
       </router-link>
     </transition-group>
-    <ContextMenu :visible.sync="visible" :offsetTop="offsetTop" :offsetLeft="offsetLeft" />
+    <context-menu :visible.sync="visible" :style="styleObj">
+      <li class="context-menu-item" @click="refreshSelectedTag(selectedTag)">重新加载</li>
+      <li class="context-menu-item" @click="openBlankSelectedTag(selectedTag)">将标签页移至新窗口</li>
+      <el-divider></el-divider>
+      <li
+        class="context-menu-item"
+        :class="{ 'context-menu-item__disabled': selectedTag.meta && selectedTag.meta.affix }"
+        @click="selectedTag.meta && selectedTag.meta.affix ? null : closeSelectedTag(selectedTag)"
+      >
+        关闭
+      </li>
+      <li class="context-menu-item">关闭其他标签页</li>
+      <li class="context-menu-item">关闭全部标签页</li>
+    </context-menu>
   </div>
 </template>
 
@@ -28,6 +44,11 @@ import { RouteConfig } from 'vue-router'
 import ContextMenu from './ContextMenu.vue'
 import { TagsViewModule, ITagsView } from '@/store/modules/tags-view'
 import { PermissionModule } from '@/store/modules/permission'
+interface IStyleObj {
+  left: string
+  top: string
+  [propsName: string]: string
+}
 @Component({
   name: 'TagsView',
   components: {
@@ -36,8 +57,11 @@ import { PermissionModule } from '@/store/modules/permission'
 })
 export default class extends Vue {
   private visible = false
-  private offsetTop = 0
-  private offsetLeft = 0
+  private selectedTag: ITagsView = {}
+  private styleObj: IStyleObj = {
+    left: 0 + 'px',
+    top: 0 + 'px'
+  }
 
   get visitedViews() {
     return TagsViewModule.visitedViews
@@ -89,6 +113,24 @@ export default class extends Vue {
     name && TagsViewModule.addView(this.$route)
   }
 
+  private async refreshSelectedTag(tag: ITagsView) {
+    // waitting delete cacheView
+    await TagsViewModule.deleteCachedView(tag)
+    if (tag.path && this.$route.path !== tag.path) this.$router.replace(tag.path)
+  }
+
+  private openBlankSelectedTag(tag: ITagsView) {
+    const { fullPath, name, meta } = tag
+    if (fullPath && name) {
+      ;(!meta || !meta.affix) && TagsViewModule.deleteView(tag)
+      const { href } = this.$router.resolve({ path: fullPath })
+      //waitting fade animation compelete
+      setTimeout(() => {
+        window.open(href, '_blank')
+      }, 300)
+    }
+  }
+
   private closeSelectedTag(tag: ITagsView) {
     const index = this.visitedViews.findIndex(item => item.name === tag.name)
     TagsViewModule.deleteView(tag)
@@ -110,10 +152,14 @@ export default class extends Vue {
   //   console.log(index)
   // }
 
-  private openContextMenu(event: MouseEvent, tag?: ITagsView) {
-    console.log(tag, event)
-    this.offsetTop = event.pageY
-    this.offsetLeft = event.pageX
+  private openContextMenu(event: MouseEvent, tag: ITagsView) {
+    // console.log(tag, event)
+    this.selectedTag = tag
+    this.styleObj = {
+      ...this.styleObj,
+      left: event.pageX + 'px',
+      top: event.pageY + 'px'
+    }
     this.visible = true
   }
   private closeContextMenu() {
@@ -149,7 +195,9 @@ export default class extends Vue {
     flex: 0 1 140px;
     min-width: 0;
     height: 28px;
-    line-height: 26px;
+    // line-height: 26px;
+    display: inline-flex;
+    align-items: center;
     padding: 0 8px;
     font-size: 12px;
     background-color: #fff;
@@ -170,17 +218,10 @@ export default class extends Vue {
         background-color: #42b983;
         // color: #666;
       }
-      &::before {
-        content: '';
-        background: #fff;
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        position: relative;
-        margin-right: 5px;
-      }
     }
+  }
+  .svg-icon {
+    margin-right: 5px;
   }
   .tags-view-title {
     white-space: nowrap;

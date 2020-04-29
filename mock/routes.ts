@@ -51,9 +51,9 @@ const adminRoutes: IRoute[] = [
       {
         path: 'list',
         component: 'article/list',
-        name: 'Article',
+        name: 'ArticleList',
         meta: {
-          title: 'article'
+          title: 'articleList'
         }
       },
       {

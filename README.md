@@ -45,3 +45,9 @@ yarn svg
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Share
+
+```
+keep-alive  通过组件name缓存  设置最大缓存数10
+```

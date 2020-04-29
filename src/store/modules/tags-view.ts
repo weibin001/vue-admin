@@ -9,12 +9,16 @@ export interface ITagsView extends Partial<Route> {
 export interface ITagsViewState {
   visitedViews: ITagsView[]
   cachedViews: (string | undefined)[]
+  // loadingViews: string[]
+  // historyViews: ITagsView[]
 }
 
 @Module({ name: 'TagsView', dynamic: true, store })
 class TagsView extends VuexModule implements ITagsViewState {
   public visitedViews: ITagsView[] = []
   public cachedViews: (string | undefined)[] = []
+  // public loadingViews = []
+  // public historyViews: ITagsView[] = []
 
   @Mutation
   private ADD_VISITED_VIEW(view: ITagsView) {
@@ -52,9 +56,13 @@ class TagsView extends VuexModule implements ITagsViewState {
   }
   @Action
   public deleteView(view: ITagsView) {
-    // this.ADD_CACHED_VIEW(view)
     this.DEL_VISITED_VIEW(view)
     this.DEL_CACHED_VIEW(view)
+  }
+  @Action
+  public async deleteCachedView(view: ITagsView) {
+    this.DEL_CACHED_VIEW(view)
+    return Promise.resolve()
   }
 }
 
