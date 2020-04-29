@@ -774,7 +774,7 @@
   integrity sha1-+GSuhQBND8q29QvpFBxNo2jRZWo=
   dependencies:
     exec-sh "^0.3.2"
-    minimist "^1.2.0"
+    minimist "^1.2.3"
 
 "@cypress/listr-verbose-renderer@0.4.1":
   version "0.4.1"
@@ -1492,7 +1492,7 @@
     "@vue/component-compiler-utils" "^3.0.2"
     "@vue/preload-webpack-plugin" "^1.1.0"
     "@vue/web-component-wrapper" "^1.2.0"
-    acorn "^7.1.0"
+    acorn "^7.1.1"
     acorn-walk "^7.0.0"
     address "^1.1.2"
     autoprefixer "^9.7.4"
