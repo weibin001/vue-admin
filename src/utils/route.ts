@@ -1,10 +1,11 @@
 import BasicLayout from '@/layouts/BasicLayout/index.vue'
 import Page404 from '@/views/error-page/404.vue'
+import { TagsViewModule } from '@/store/modules/tags-view'
 import { IRoute } from '@/api/types'
-type TAsyncRoute = (path: string) => Promise<{ functional: boolean; render: (h: Function) => JSX.Element }>
-export const asyncRoute: TAsyncRoute = (path: string) => {
+type TAsyncRoute = (item: IRoute) => Promise<{ functional: boolean; render: (h: Function, props: any) => JSX.Element }>
+export const asyncRoute: TAsyncRoute = (item: IRoute) => {
   const asyncComponent = () => ({
-    component: import(/* webpackChunkName: '[request]' */ `@/views/${path}.vue`),
+    component: import(/* webpackChunkName: '[request]' */ `@/views/${item.component}.vue`),
     // 异步组件加载时使用的组件
     // loading: LoadingComponent,
     // 加载失败时使用的组件
@@ -16,18 +17,29 @@ export const asyncRoute: TAsyncRoute = (path: string) => {
     timeout: 3000
   })
   return Promise.resolve({
-    functional: true,
-    render(h: Function): JSX.Element {
-      // Transparently pass any props or children
-      // to the view component.
-      return h(asyncComponent)
-    }
+    name: item.name,
+    functional: true, // functional Component without lifecycle
+    render: (h: Function): JSX.Element =>
+      h(asyncComponent, {
+        on: {
+          'hook:beforeCreate': () => {
+            item.name && TagsViewModule.addLoadingView(item.name)
+          },
+          'hook:mounted': () => {
+            item.name && TagsViewModule.delLoadingView(item.name)
+          }
+          // handleManualMounted: () => {
+          //   // Manual Close Tag Loading Event
+          //   item.name && TagsViewModule.delLoadingView(item.name)
+          // }
+        }
+      })
   })
 }
 
 export const formatRoutes: <T extends IRoute>(arg: T[]) => T[] = routes =>
   routes.map(item => ({
     ...item,
-    component: item.component === 'Layout' ? BasicLayout : () => asyncRoute(item.component),
+    component: item.component === 'Layout' ? BasicLayout : () => asyncRoute(item),
     children: item.children ? formatRoutes(item.children) : []
   }))

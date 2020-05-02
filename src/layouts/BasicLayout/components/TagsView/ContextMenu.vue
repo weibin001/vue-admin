@@ -1,6 +1,6 @@
 <template>
   <transition name="el-fade-in">
-    <ul class="context-menu" v-show="visible">
+    <ul class="context-menu" v-show="visible" :style="styleObj">
       <slot />
     </ul>
   </transition>
@@ -13,13 +13,25 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 })
 export default class extends Vue {
   @Prop({ required: true, type: Boolean, default: false }) visible!: boolean
-  public init = this.visible
+  @Prop({ required: true, default: 0 }) left!: number
+  @Prop({ required: true, default: 0 }) top!: number
+  private init = this.visible
+
+  get styleObj() {
+    return {
+      left: this.left + 'px',
+      top: this.top + 'px'
+    }
+  }
+
   @Watch('visible')
-  onVisibleChange(val: boolean) {
+  private onVisibleChange(val: boolean) {
     if (val) {
       !this.init && document.body.appendChild(this.$el as HTMLElement)
+      document.body.classList.add('el-popup-parent--hidden')
       this.$emit('open')
     } else {
+      document.body.classList.remove('el-popup-parent--hidden')
       this.$emit('close')
     }
   }
@@ -51,6 +63,7 @@ export default class extends Vue {
     margin: 0;
     font-size: 14px;
     color: #606266;
+    white-space: nowrap;
     outline: none;
     user-select: none;
     outline: none;

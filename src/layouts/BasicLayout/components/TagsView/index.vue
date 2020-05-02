@@ -8,8 +8,14 @@
         v-for="tag in visitedViews"
         :key="tag.path"
         @contextmenu.prevent.stop.native="openContextMenu($event, tag)"
+        :title="tag.meta.title"
       >
-        <svg-icon :name="tag.meta && tag.meta.icon ? tag.meta.icon : 'earth'" />
+        <svg-icon
+          :class="{ 'svg-loading': loadingViews.includes(tag.name) }"
+          :name="tag.meta && tag.meta.icon ? tag.meta.icon : 'earth'"
+          width="1.2em"
+          height="1.2em"
+        />
         <span class="tags-view-title">
           {{ tag.meta.title }}
         </span>
@@ -20,7 +26,7 @@
         </div>
       </router-link>
     </transition-group>
-    <context-menu :visible.sync="visible" :style="styleObj">
+    <context-menu ref="popper" :visible.sync="visible" :left="left" :top="top">
       <li class="context-menu-item" @click="refreshSelectedTag(selectedTag)">重新加载</li>
       <li class="context-menu-item" @click="openBlankSelectedTag(selectedTag)">将标签页移至新窗口</li>
       <el-divider></el-divider>
@@ -31,8 +37,8 @@
       >
         关闭
       </li>
-      <li class="context-menu-item">关闭其他标签页</li>
-      <li class="context-menu-item">关闭全部标签页</li>
+      <li class="context-menu-item" @click="closeOthersTags(selectedTag)">关闭其他标签页</li>
+      <li class="context-menu-item" @click="closeAllTags">关闭全部标签页</li>
     </context-menu>
   </div>
 </template>
@@ -44,11 +50,6 @@ import { RouteConfig } from 'vue-router'
 import ContextMenu from './ContextMenu.vue'
 import { TagsViewModule, ITagsView } from '@/store/modules/tags-view'
 import { PermissionModule } from '@/store/modules/permission'
-interface IStyleObj {
-  left: string
-  top: string
-  [propsName: string]: string
-}
 @Component({
   name: 'TagsView',
   components: {
@@ -57,14 +58,16 @@ interface IStyleObj {
 })
 export default class extends Vue {
   private visible = false
+  private top = 0
+  private left = 0
   private selectedTag: ITagsView = {}
-  private styleObj: IStyleObj = {
-    left: 0 + 'px',
-    top: 0 + 'px'
-  }
 
   get visitedViews() {
     return TagsViewModule.visitedViews
+  }
+
+  get loadingViews() {
+    return TagsViewModule.loadingViews
   }
 
   get routes() {
@@ -116,13 +119,14 @@ export default class extends Vue {
   private async refreshSelectedTag(tag: ITagsView) {
     // waitting delete cacheView
     await TagsViewModule.deleteCachedView(tag)
-    if (tag.path && this.$route.path !== tag.path) this.$router.replace(tag.path)
+    const { name, path, fullPath } = tag
+    name && this.$router.replace({ path: name === this.$route.name ? `/redirect${fullPath}` : path })
   }
 
   private openBlankSelectedTag(tag: ITagsView) {
     const { fullPath, name, meta } = tag
     if (fullPath && name) {
-      ;(!meta || !meta.affix) && TagsViewModule.deleteView(tag)
+      ;(!meta || !meta.affix) && this.closeSelectedTag(tag)
       const { href } = this.$router.resolve({ path: fullPath })
       //waitting fade animation compelete
       setTimeout(() => {
@@ -131,39 +135,48 @@ export default class extends Vue {
     }
   }
 
-  private closeSelectedTag(tag: ITagsView) {
+  private async closeSelectedTag(tag: ITagsView) {
+    const { name } = this.$route
     const index = this.visitedViews.findIndex(item => item.name === tag.name)
-    TagsViewModule.deleteView(tag)
-    this.changeView(index === this.visitedViews.length - 1 ? index : index - 1)
+    await TagsViewModule.deleteView(tag)
+    name === tag.name && this.changeView(index === this.visitedViews.length - 1 ? index : index - 1)
+  }
+
+  private closeOthersTags(tag: ITagsView) {
+    tag.name && this.$router.push({ name: tag.name })
+    TagsViewModule.deleteOthersViews(tag)
+  }
+
+  private async closeAllTags() {
+    await TagsViewModule.deleteAllViews()
+    this.affixTags.some(tag => tag.path === this.$route.path) || this.changeView(this.visitedViews.length)
   }
 
   private changeView(index: number) {
-    if (this.visitedViews[index].fullPath && this.visitedViews[index].name) {
-      this.$router.push(this.visitedViews[index].fullPath as string)
+    if (this.visitedViews.length === 0) {
+      return this.$router.replace({
+        path: '/redirect' + '/'
+      })
     }
+    const { name } = this.visitedViews[index]
+    name && this.$router.push({ name })
   }
-
-  // private toNextView(index: number) {
-  //   console.log(index)
-  //   // console.log(this.visitedViews, tag)
-  // }
-
-  // private toPreviousView(index: number) {
-  //   console.log(index)
-  // }
 
   private openContextMenu(event: MouseEvent, tag: ITagsView) {
-    // console.log(tag, event)
     this.selectedTag = tag
-    this.styleObj = {
-      ...this.styleObj,
-      left: event.pageX + 'px',
-      top: event.pageY + 'px'
-    }
+    const boundary = document.body.offsetWidth
+    const menuWidth = 156
+    this.left = event.pageX + menuWidth > boundary ? event.pageX - menuWidth : event.pageX
+    this.top = event.pageY
     this.visible = true
   }
+
   private closeContextMenu() {
     this.visible = false
+  }
+
+  private dragSelectedTag() {
+    //TODO
   }
 
   mounted() {
@@ -200,7 +213,7 @@ export default class extends Vue {
     align-items: center;
     padding: 0 8px;
     font-size: 12px;
-    background-color: #fff;
+    background-color: #f7f7f7;
     border: 1px solid #d8dce5;
     border-radius: 4px;
     color: #495060;
@@ -222,6 +235,10 @@ export default class extends Vue {
   }
   .svg-icon {
     margin-right: 5px;
+    transition: transform 0.3s;
+    &.svg-loading {
+      transform: scale(0.8);
+    }
   }
   .tags-view-title {
     white-space: nowrap;

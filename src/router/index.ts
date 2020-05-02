@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import { default as VueRouter, Route, RouteConfig } from 'vue-router'
+import BasicLayout from '@/layouts/BasicLayout/index.vue'
 
 Vue.use(VueRouter)
 /*
@@ -25,9 +26,15 @@ export const constantRoutes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
   },
   {
-    path: '/',
-    redirect: '/dashboard'
-    // component: BasicLayout
+    path: '/redirect',
+    component: BasicLayout,
+    meta: { hidden: true },
+    children: [
+      {
+        path: ':path(.*)',
+        component: () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue')
+      }
+    ]
   }
   // {
   //   path: '/about',

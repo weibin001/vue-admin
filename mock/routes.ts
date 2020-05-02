@@ -33,8 +33,8 @@ const adminRoutes: IRoute[] = [
         name: 'Dashboard',
         meta: {
           title: 'dashboard',
-          icon: 'dashboard',
-          affix: true
+          icon: 'dashboard'
+          // affix: true
         }
       }
     ]
