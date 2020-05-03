@@ -8,6 +8,7 @@
         <TagsView />
       </div>
       <AppMain />
+      <Settings />
     </div>
   </div>
 </template>
@@ -17,14 +18,15 @@ import { Component } from 'vue-property-decorator'
 import { AppModule, DeviceType } from '@/store/modules/app'
 import ResizeMixin from './mixins/resize'
 import { mixins } from 'vue-class-component'
-import { SideBar, Navbar, TagsView, AppMain } from './components'
+import { SideBar, Navbar, TagsView, Settings, AppMain } from './components'
 @Component({
   name: 'BasicLayout',
   components: {
     SideBar,
     Navbar,
     TagsView,
-    AppMain
+    AppMain,
+    Settings
   }
 })
 export default class extends mixins(ResizeMixin) {

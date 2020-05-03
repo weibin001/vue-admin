@@ -1,4 +1,5 @@
 const path = require('path')
+const themePlugin = require('./build/themePlugin.ts')
 module.exports = {
   publicPath: '/',
   filenameHashing: true,
@@ -30,6 +31,9 @@ module.exports = {
         path.resolve(__dirname, './src/styles/_variables.scss')
       ]
     }
+  },
+  configureWebpack: {
+    plugins: [themePlugin]
   },
   chainWebpack: config => {
     // 设置全局 快捷路径或方法名 config.resolve.alias.set('~', path.resolve(__dirname, './src')).set('$','jquery/dist/jquery.min.js')
