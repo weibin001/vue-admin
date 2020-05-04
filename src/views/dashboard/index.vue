@@ -1,5 +1,5 @@
 <template>
-  <div>dashboard</div>
+  <div>dashboard<el-button type="primary">11</el-button></div>
 </template>
 
 <script lang="ts">

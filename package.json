@@ -72,8 +72,7 @@
     "yamljs": "^0.3.0"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged",
-    "commit-msg":":art: 格式化代码"
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,vue,ts}": [

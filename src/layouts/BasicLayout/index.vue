@@ -2,13 +2,13 @@
   <div class="app-wrapper" :class="classObj">
     <div v-if="classObj.mobile && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <SideBar class="sidebar-container" />
-    <div class="main-container hasTagsView">
-      <div>
+    <div class="main-container" :class="{ hasTagsView: showTagsView }">
+      <div :class="{ 'fixed-header': fixedHeader }">
         <Navbar />
-        <TagsView />
+        <TagsView v-if="showTagsView" />
       </div>
       <AppMain />
-      <Settings />
+      <Settings v-if="showSettings" />
     </div>
   </div>
 </template>
@@ -16,6 +16,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { AppModule, DeviceType } from '@/store/modules/app'
+import { SettingsModule } from '@/store/modules/settings'
 import ResizeMixin from './mixins/resize'
 import { mixins } from 'vue-class-component'
 import { SideBar, Navbar, TagsView, Settings, AppMain } from './components'
@@ -41,6 +42,18 @@ export default class extends mixins(ResizeMixin) {
 
   get sidebar() {
     return AppModule.sidebar
+  }
+
+  get fixedHeader() {
+    return SettingsModule.fixedHeader
+  }
+
+  get showTagsView() {
+    return SettingsModule.showTagsView
+  }
+
+  get showSettings() {
+    return SettingsModule.showSettings
   }
 
   public handleClickOutside() {
@@ -79,6 +92,14 @@ export default class extends mixins(ResizeMixin) {
     left: 0;
     z-index: 1001;
     overflow: hidden;
+    transition: width 0.28s;
+  }
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    width: calc(100% - #{$sideBarWidth});
     transition: width 0.28s;
   }
   &.hideSidebar {

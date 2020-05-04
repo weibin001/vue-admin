@@ -1,6 +1,5 @@
 interface ISettings {
   title: string
-  themeColor: string
   showSettings: boolean
   showTagsView: boolean
   fixedHeader: boolean
@@ -12,8 +11,7 @@ interface ISettings {
 //默认配置
 const settings: ISettings = {
   title: 'vue-admin',
-  themeColor: '#409eff',
-  showSettings: false,
+  showSettings: true,
   showTagsView: true,
   fixedHeader: false,
   showSidebarLogo: true,

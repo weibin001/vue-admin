@@ -6,8 +6,23 @@
       </h3>
       <div class="settings-item">
         <span class="settings-label">主题色</span>
-        <el-color-picker v-model="color1" size="small" @change="onThemeChange"></el-color-picker>
-        <!-- <el-switch v-model="showTagsView" class="settings-switch" /> -->
+        <ElColorPicker v-model="theme" size="small" />
+      </div>
+      <div class="settings-item">
+        <span class="settings-label">显示 Tags-View</span>
+        <ElSwitch v-model="showTagsView" class="settings-switch" />
+      </div>
+      <div class="settings-item">
+        <span class="settings-label">显示侧边栏 Logo</span>
+        <ElSwitch v-model="showSidebarLogo" class="settings-switch" />
+      </div>
+      <div class="settings-item">
+        <span class="settings-label">固定 Header</span>
+        <ElSwitch v-model="fixedHeader" class="settings-switch" />
+      </div>
+      <div class="settings-item">
+        <span class="settings-label">侧边栏文字主题色</span>
+        <ElSwitch v-model="sidebarTextTheme" class="settings-switch" />
       </div>
     </div>
   </right-panel>
@@ -17,7 +32,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import RightPanel from '@/components/RightPanel/index.vue'
 import { SettingsModule } from '@/store/modules/settings'
-import { initThemeColor, changeThemeColor } from '@/utils/themeColorClient'
+import { changeThemeColor } from '@/utils/themeColorClient'
 @Component({
   name: 'Settings',
   components: {
@@ -25,14 +40,45 @@ import { initThemeColor, changeThemeColor } from '@/utils/themeColorClient'
   }
 })
 export default class extends Vue {
-  private color1 = '#409EFF'
-  get fixedHeader() {
-    return SettingsModule.fixedHeader
+  private get theme() {
+    return SettingsModule.theme
+  }
+  private set theme(value) {
+    this.onThemeChange(value)
   }
 
-  private onThemeChange(val: string) {
-    initThemeColor()
-    changeThemeColor(val).then(() => this.$message.success('主题色切换成功~'))
+  private get showTagsView() {
+    return SettingsModule.showTagsView
+  }
+  private set showTagsView(value) {
+    SettingsModule.changeSetting({ key: 'showTagsView', value })
+  }
+
+  private get showSidebarLogo() {
+    return SettingsModule.showSidebarLogo
+  }
+  private set showSidebarLogo(value) {
+    SettingsModule.changeSetting({ key: 'showSidebarLogo', value })
+  }
+
+  private get fixedHeader() {
+    return SettingsModule.fixedHeader
+  }
+  private set fixedHeader(value) {
+    SettingsModule.changeSetting({ key: 'fixedHeader', value })
+  }
+
+  private get sidebarTextTheme() {
+    return SettingsModule.sidebarTextTheme
+  }
+  private set sidebarTextTheme(value) {
+    SettingsModule.changeSetting({ key: 'sidebarTextTheme', value })
+  }
+
+  private async onThemeChange(val: string) {
+    await changeThemeColor(val)
+    SettingsModule.changeSetting({ key: 'theme', value: val })
+    this.$message.success('主题色切换成功~')
   }
 }
 </script>

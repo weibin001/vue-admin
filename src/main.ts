@@ -10,8 +10,7 @@ import router from './router'
 import store from './store'
 import '@/icons/components'
 import '@/permission'
-import './pwa/registerServiceWorker'
-import { initThemeColor } from '@/utils/themeColorClient'
+// import './pwa/registerServiceWorker'
 
 Vue.use(ElementUI, {
   size: 'medium'
@@ -24,8 +23,6 @@ Vue.use(SvgIcon, {
 })
 
 Vue.config.productionTip = false
-
-initThemeColor()
 
 new Vue({
   router,
