@@ -2,8 +2,8 @@
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="item in breadcrumbs" :key="item.path">
-        <a v-if="$route.path !== item.path" @click="handleLink(item)">{{ item.meta.title }}</a>
-        <span class="no-redirect" v-else>{{ item.meta.title }}</span>
+        <a v-if="$route.path !== item.path" @click="handleLink(item)">{{ $t('route.' + item.meta.title) }}</a>
+        <span class="no-redirect" v-else>{{ $t('route.' + item.meta.title) }}</span>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>

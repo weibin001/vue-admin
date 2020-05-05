@@ -8,7 +8,7 @@
         v-for="tag in visitedViews"
         :key="tag.path"
         @contextmenu.prevent.stop.native="openContextMenu($event, tag)"
-        :title="tag.meta.title"
+        :title="$t('route.' + tag.meta.title)"
       >
         <svg-icon
           :class="{ 'svg-loading': loadingViews.includes(tag.name) }"
@@ -17,7 +17,7 @@
           height="1.2em"
         />
         <span class="tags-view-title">
-          {{ tag.meta.title }}
+          {{ $t('route.' + tag.meta.title) }}
         </span>
         <div class="tags-view-icon-wrapper">
           <span v-if="!tag.meta.affix" class="tags-view-icon" @click.prevent.stop="closeSelectedTag(tag)">

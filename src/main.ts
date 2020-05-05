@@ -6,14 +6,16 @@ import SvgIcon from 'vue-svgicon'
 
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import store from './store'
+import router from '@/router'
+import store from '@/store'
+import i18n from '@/lang'
 import '@/icons/components'
 import '@/permission'
 import './pwa/registerServiceWorker'
 
 Vue.use(ElementUI, {
-  size: 'medium'
+  size: 'medium',
+  i18n: (key: string, value: string) => i18n.t(key, value)
 })
 
 Vue.use(SvgIcon, {
@@ -27,5 +29,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

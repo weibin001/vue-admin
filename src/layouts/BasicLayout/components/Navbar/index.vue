@@ -10,6 +10,7 @@
       <Breaudcrumb />
     </div>
     <div class="right-container">
+      <lang-select class="right-container-item hover-effect" />
       <el-dropdown class="avatar-container right-container-item hover-effect" trigger="hover">
         <span class="avatar-wrapper">
           <el-avatar
@@ -33,11 +34,12 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import Breaudcrumb from '@/components/Breadcrumb/index.vue'
+import LangSelect from '@/components/LangSelect/index.vue'
 import { AppModule, DeviceType } from '@/store/modules/app'
 import { UserModule } from '@/store/modules/user'
 @Component({
   name: 'Navbar',
-  components: { Breaudcrumb }
+  components: { Breaudcrumb, LangSelect }
 })
 export default class extends Vue {
   get sidebar() {
@@ -94,6 +96,7 @@ export default class extends Vue {
     flex: 1;
     justify-content: flex-end;
     &-item {
+      font-size: 18px;
       padding: 0 8px;
       white-space: nowrap;
       @extend .vertical-center;
@@ -102,6 +105,7 @@ export default class extends Vue {
       margin-right: 15px;
     }
     .avatar-wrapper {
+      font-size: 14px;
       display: inline-flex;
       align-items: center;
       outline: none;

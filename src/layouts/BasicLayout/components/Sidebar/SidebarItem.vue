@@ -18,18 +18,12 @@ export default class extends Vue {
 
   private isExternal = isExternal
 
-  private resolvePath(routePath: string): string {
-    return (
-      (this.isExternal(routePath) && routePath) ||
-      (this.isExternal(this.basePath) && this.basePath) ||
-      path.resolve(this.basePath, routePath)
-    )
-  }
   //是否显示子级菜单
   private get alwaysShowRootMenu(): boolean {
     const { meta } = this.item
     return meta && meta.alwaysShow
   }
+
   // 获取满足条件子菜单数量
   private get showChildNumber(): number {
     const { children } = this.item
@@ -38,6 +32,7 @@ export default class extends Vue {
     }
     return 0
   }
+
   // 获取子菜单（当子级菜单只有一个或满足条件只有一个时
   private get theOnlyOneChild() {
     if (this.showChildNumber > 1) return null
@@ -49,6 +44,15 @@ export default class extends Vue {
     }
     return { ...this.item, path: '' }
   }
+
+  private resolvePath(routePath: string): string {
+    return (
+      (this.isExternal(routePath) && routePath) ||
+      (this.isExternal(this.basePath) && this.basePath) ||
+      path.resolve(this.basePath, routePath)
+    )
+  }
+
   // 过滤菜单
   public getChild(menu: RouteConfig[]) {
     const childMenu = menu.filter(item => !item.meta || !item.meta.hidden)
@@ -70,7 +74,7 @@ export default class extends Vue {
               class={{ 'submenu-title-noDropdown': this.isFirstLevel }}
               index={this.resolvePath(this.theOnlyOneChild.path)}>
               {this.theOnlyOneChild.meta.icon ? <svg-icon name={this.theOnlyOneChild.meta.icon} /> : ''}
-              <span slot="title">{this.theOnlyOneChild.meta.title}</span>
+              <span slot="title">{this.$t('route.' + this.theOnlyOneChild.meta.title)}</span>
             </el-menu-item>
           </sidebar-link>
         ) : (
@@ -78,7 +82,7 @@ export default class extends Vue {
             <template slot="title">
               {meta.icon && <svg-icon name={meta.icon} />}
               <span class="el-submenu--title" slot="title">
-                {meta.title}
+                {this.$t('route.' + meta.title)}
               </span>
             </template>
             {children.map((childrenItem: any) => (

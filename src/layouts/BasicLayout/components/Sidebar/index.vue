@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'has-logo': showSidebarLogo }">
     <SidebarLogo v-if="showSidebarLogo" :isCollapse="isCollapse" />
-    <el-scrollbar wrap-class="scrollbar-wrapper" :noresize="true" style="">
+    <el-scrollbar wrap-class="scrollbar-wrapper" :noresize="true">
       <el-menu
         ref="el-menu"
         :default-active="activeMenu"

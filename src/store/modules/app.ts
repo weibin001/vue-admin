@@ -26,7 +26,7 @@ export interface IAppState {
 @Module({ store, dynamic: true, name: 'app' })
 class App extends VuexModule implements IAppState {
   public device = DeviceType.Desktop
-  public language = ''
+  public language = getCookie('language') || 'en'
   public sidebar = {
     opened: getCookie('sidebar_status') !== 'close',
     withoutAnimation: false
@@ -53,6 +53,12 @@ class App extends VuexModule implements IAppState {
     this.device = device
   }
 
+  @Mutation
+  private TOGGLE_LANGUAGE(language: string) {
+    this.language = language
+    setCookie('language', language)
+  }
+
   @Action
   public ToggleSideBar(withoutAnimation: boolean) {
     this.TOGGLE_SIDEBAR(withoutAnimation)
@@ -66,6 +72,11 @@ class App extends VuexModule implements IAppState {
   @Action
   public ToggleDevice(device: DeviceType) {
     this.TOGGLE_DEVICE(device)
+  }
+
+  @Action({ commit: 'TOGGLE_LANGUAGE' })
+  public ToggleLanguage(language: string) {
+    return language
   }
 }
 
