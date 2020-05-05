@@ -21,9 +21,8 @@ const adminRoutes: IRoute[] = [
   {
     path: '/',
     component: 'Layout',
-    redirect: 'dashboard',
+    redirect: '/dashboard',
     meta: {
-      title: 'dashboard',
       icon: 'dashboard'
     },
     children: [

@@ -7,14 +7,14 @@
       >
         <svg-icon name="hamburger" width="20" height="20" />
       </div>
-      <span>首页</span>
+      <Breaudcrumb />
     </div>
     <div class="right-container">
-      <el-dropdown class="avatar-container right-container-item hover-effect" trigger="click">
+      <el-dropdown class="avatar-container right-container-item hover-effect" trigger="hover">
         <span class="avatar-wrapper">
           <el-avatar
             class="user-avatar"
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            :src="require('@/assets/03b0d39583f48206768a7534e55bcpng.png')"
             size="small"
           ></el-avatar>
           <span style="margin-right:5px">Hi!</span>
@@ -32,10 +32,12 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import Breaudcrumb from '@/components/Breadcrumb/index.vue'
 import { AppModule, DeviceType } from '@/store/modules/app'
 import { UserModule } from '@/store/modules/user'
 @Component({
-  name: 'Navbar'
+  name: 'Navbar',
+  components: { Breaudcrumb }
 })
 export default class extends Vue {
   get sidebar() {

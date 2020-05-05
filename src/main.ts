@@ -10,7 +10,7 @@ import router from './router'
 import store from './store'
 import '@/icons/components'
 import '@/permission'
-// import './pwa/registerServiceWorker'
+import './pwa/registerServiceWorker'
 
 Vue.use(ElementUI, {
   size: 'medium'
