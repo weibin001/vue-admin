@@ -10,7 +10,8 @@
       <Breaudcrumb />
     </div>
     <div class="right-container">
-      <lang-select class="right-container-item hover-effect" />
+      <SizeSelect class="right-container-item hover-effect" />
+      <LangSelect class="right-container-item hover-effect" />
       <el-dropdown class="avatar-container right-container-item hover-effect" trigger="hover">
         <span class="avatar-wrapper">
           <el-avatar
@@ -35,11 +36,12 @@
 import { Vue, Component } from 'vue-property-decorator'
 import Breaudcrumb from '@/components/Breadcrumb/index.vue'
 import LangSelect from '@/components/LangSelect/index.vue'
+import SizeSelect from '@/components/SizeSelect/index.vue'
 import { AppModule, DeviceType } from '@/store/modules/app'
 import { UserModule } from '@/store/modules/user'
 @Component({
   name: 'Navbar',
-  components: { Breaudcrumb, LangSelect }
+  components: { Breaudcrumb, LangSelect, SizeSelect }
 })
 export default class extends Vue {
   get sidebar() {

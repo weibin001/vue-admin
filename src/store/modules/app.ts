@@ -59,6 +59,12 @@ class App extends VuexModule implements IAppState {
     setCookie('language', language)
   }
 
+  @Mutation
+  private TOGGLE_SIZE(size: string) {
+    this.size = size
+    setCookie('sizeKey', size)
+  }
+
   @Action
   public ToggleSideBar(withoutAnimation: boolean) {
     this.TOGGLE_SIDEBAR(withoutAnimation)
@@ -77,6 +83,11 @@ class App extends VuexModule implements IAppState {
   @Action({ commit: 'TOGGLE_LANGUAGE' })
   public ToggleLanguage(language: string) {
     return language
+  }
+
+  @Action({ commit: 'TOGGLE_SIZE' })
+  public ToggleSize(size: string) {
+    return size
   }
 }
 

@@ -8,13 +8,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
+import { AppModule } from '@/store/modules/app'
 import i18n from '@/lang'
 import '@/icons/components'
 import '@/permission'
 import './pwa/registerServiceWorker'
 
 Vue.use(ElementUI, {
-  size: 'medium',
+  size: AppModule.size,
   i18n: (key: string, value: string) => i18n.t(key, value)
 })
 

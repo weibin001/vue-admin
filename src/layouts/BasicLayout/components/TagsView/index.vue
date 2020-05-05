@@ -253,8 +253,8 @@ export default class extends Vue {
     height: 20px;
     line-height: 16px;
     text-align: center;
-    background-color: #fff;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 1) 20%);
+    background-color: #f7f7f7;
+    background: linear-gradient(to right, rgba(247, 247, 247, 0.3), rgba(247, 247, 247, 1) 20%);
     user-select: none;
     .tags-view-icon {
       display: inline-block;

@@ -6,5 +6,11 @@ export default {
     articleDetail: 'ArticleDetail',
     publishArticle: 'PublishArticle',
     ele: 'ElementUI'
-  }
+  },
+  navbar: {
+    language: 'Language',
+    size: 'Default Size',
+    screen: 'Full Screen'
+  },
+  contextMenu: {}
 }

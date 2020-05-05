@@ -6,5 +6,11 @@ export default {
     articleDetail: '文章详情',
     publishArticle: '发布文章',
     ele: 'ElementUI'
-  }
+  },
+  navbar: {
+    language: '语言',
+    size: '布局大小',
+    screen: '全屏'
+  },
+  contextMenu: {}
 }
