@@ -1,22 +1,23 @@
-interface ISettings {
+export interface ISettings {
   title: string
-  showSettings: boolean
-  showTagsView: boolean
-  fixedHeader: boolean
-  showSidebarLogo: boolean
+  showSettings: string
+  showTagsView: string
+  fixedHeader: string
+  showSidebarLogo: string
   errorLog: Array<string>
-  sidebarTextTheme: boolean
+  sidebarTextTheme: string
+  [propName: string]: any
 }
 
 //默认配置
-const settings: ISettings = {
+export const settings: ISettings = {
   title: 'vue-admin',
-  showSettings: true,
-  showTagsView: true,
-  fixedHeader: false,
-  showSidebarLogo: true,
+  showSettings: '1',
+  showTagsView: '1',
+  fixedHeader: '0',
+  showSidebarLogo: '1',
   errorLog: ['production'],
-  sidebarTextTheme: true
+  sidebarTextTheme: '1'
 }
 
-export default settings
+// export default settings

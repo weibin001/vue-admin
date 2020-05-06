@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'has-logo': showSidebarLogo }">
+  <div :class="{ 'has-logo': showSidebarLogo === '1' }">
     <SidebarLogo v-if="showSidebarLogo" :isCollapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper" :noresize="true">
       <el-menu
@@ -51,7 +51,7 @@ export default class extends Vue {
     const { meta, path } = this.$route
     return meta.activeMenu || path
   }
-  private get showSidebarLogo(): boolean {
+  private get showSidebarLogo() {
     return SettingsModule.showSidebarLogo
   }
   private get menuActiveTextColor() {

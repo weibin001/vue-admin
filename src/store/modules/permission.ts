@@ -19,11 +19,21 @@ class Permission extends VuexModule implements IPermission {
     this.routes = constantRoutes.concat(routes)
     this.dynamicRoutes = routes
   }
+  @Mutation
+  private RESET_ROUTES(routes: RouteConfig[]) {
+    this.routes = constantRoutes
+    this.dynamicRoutes = routes
+  }
 
   @Action({ commit: 'SET_ROUTES' })
   public async GenerateRoutes(routes: IRoute[]) {
     const dynamicRoutes: RouteConfig[] = formatRoutes(routes)
     return dynamicRoutes
+  }
+
+  @Action({ commit: 'RESET_ROUTES' })
+  public async ResetRoutes() {
+    return []
   }
 }
 

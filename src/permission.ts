@@ -4,6 +4,8 @@ import 'nprogress/nprogress.css'
 import { Route } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
 import { PermissionModule } from '@/store/modules/permission'
+import { SettingsModule } from '@/store/modules/settings'
+import { changeThemeColor } from '@/utils/themeColorClient'
 
 NProgress.configure({ showSpinner: false })
 router.beforeEach(async (to: Route, from: Route, next: Function) => {
@@ -16,6 +18,7 @@ router.beforeEach(async (to: Route, from: Route, next: Function) => {
         try {
           await UserModule.GetUserInfo()
           router.addRoutes(PermissionModule.dynamicRoutes)
+          await changeThemeColor(SettingsModule.theme)
           next({ ...to, replace: true })
         } catch (error) {
           UserModule.LogOut()
@@ -26,7 +29,12 @@ router.beforeEach(async (to: Route, from: Route, next: Function) => {
       }
     }
   } else {
+    await changeThemeColor('#178fff')
     to.path === '/login' ? next() : next(`/login?redirect=${to.path}`)
   }
+  // NProgress.done()
+})
+
+router.afterEach(() => {
   NProgress.done()
 })

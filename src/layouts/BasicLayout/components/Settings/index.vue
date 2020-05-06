@@ -6,23 +6,23 @@
       </h3>
       <div class="settings-item">
         <span class="settings-label">主题色</span>
-        <ElColorPicker v-model="theme" size="small" />
+        <ElColorPicker v-model="theme" size="small" :predefine="predefineColors" />
       </div>
       <div class="settings-item">
         <span class="settings-label">显示 Tags-View</span>
-        <ElSwitch v-model="showTagsView" class="settings-switch" />
+        <ElSwitch v-model="showTagsView" active-value="1" inactive-value="0" class="settings-switch" />
       </div>
       <div class="settings-item">
         <span class="settings-label">显示侧边栏 Logo</span>
-        <ElSwitch v-model="showSidebarLogo" class="settings-switch" />
+        <ElSwitch v-model="showSidebarLogo" active-value="1" inactive-value="0" class="settings-switch" />
       </div>
       <div class="settings-item">
         <span class="settings-label">固定 Header</span>
-        <ElSwitch v-model="fixedHeader" class="settings-switch" />
+        <ElSwitch v-model="fixedHeader" active-value="1" inactive-value="0" class="settings-switch" />
       </div>
       <div class="settings-item">
         <span class="settings-label">侧边栏文字主题色</span>
-        <ElSwitch v-model="sidebarTextTheme" class="settings-switch" />
+        <ElSwitch v-model="sidebarTextTheme" active-value="1" inactive-value="0" class="settings-switch" />
       </div>
     </div>
   </right-panel>
@@ -40,6 +40,8 @@ import { changeThemeColor } from '@/utils/themeColorClient'
   }
 })
 export default class extends Vue {
+  private predefineColors = ['#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff']
+
   private get theme() {
     return SettingsModule.theme
   }
@@ -51,33 +53,32 @@ export default class extends Vue {
     return SettingsModule.showTagsView
   }
   private set showTagsView(value) {
-    SettingsModule.changeSetting({ key: 'showTagsView', value })
+    SettingsModule.ChangeSetting({ key: 'showTagsView', value })
   }
 
   private get showSidebarLogo() {
     return SettingsModule.showSidebarLogo
   }
   private set showSidebarLogo(value) {
-    SettingsModule.changeSetting({ key: 'showSidebarLogo', value })
+    SettingsModule.ChangeSetting({ key: 'showSidebarLogo', value })
   }
 
   private get fixedHeader() {
     return SettingsModule.fixedHeader
   }
   private set fixedHeader(value) {
-    SettingsModule.changeSetting({ key: 'fixedHeader', value })
+    SettingsModule.ChangeSetting({ key: 'fixedHeader', value })
   }
 
   private get sidebarTextTheme() {
     return SettingsModule.sidebarTextTheme
   }
   private set sidebarTextTheme(value) {
-    SettingsModule.changeSetting({ key: 'sidebarTextTheme', value })
+    SettingsModule.ChangeSetting({ key: 'sidebarTextTheme', value })
   }
 
   private async onThemeChange(val: string) {
     await changeThemeColor(val)
-    SettingsModule.changeSetting({ key: 'theme', value: val })
     this.$message.success('主题色切换成功~')
   }
 }

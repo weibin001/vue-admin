@@ -59,9 +59,27 @@ export default class extends Vue {
   private toggleSideBar(): void {
     AppModule.ToggleSideBar(false)
   }
-  private async logOut(): Promise<void> {
-    await UserModule.LogOut()
-    this.$router.push('/login')
+  private logOut() {
+    this.$confirm('是否要注销', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+      beforeClose: async (actions, instance, done) => {
+        if (actions === 'confirm') {
+          instance.confirmButtonLoading = true
+          instance.confirmButtonText = '执行中...'
+          await UserModule.LogOut()
+        }
+        done()
+      },
+      callback: (actions, instance) => {
+        if (actions === 'confirm') {
+          instance.confirmButtonLoading = false
+          instance.confirmButtonText = '确定'
+          this.$router.push('/login')
+        }
+      }
+    })
   }
 }
 </script>
@@ -101,7 +119,7 @@ export default class extends Vue {
     justify-content: flex-end;
     &-item {
       font-size: 18px;
-      padding: 0 8px;
+      padding: 0 15px;
       white-space: nowrap;
       @extend .vertical-center;
     }

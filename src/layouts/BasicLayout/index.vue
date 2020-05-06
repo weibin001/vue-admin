@@ -2,13 +2,13 @@
   <div class="app-wrapper" :class="classObj">
     <div v-if="classObj.mobile && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <SideBar class="sidebar-container" />
-    <div class="main-container" :class="{ hasTagsView: showTagsView }">
-      <div :class="{ 'fixed-header': fixedHeader }">
+    <div class="main-container" :class="{ hasTagsView: showTagsView === '1' }">
+      <div :class="{ 'fixed-header': fixedHeader === '1' }">
         <Navbar />
-        <TagsView v-if="showTagsView" />
+        <TagsView v-if="showTagsView === '1'" />
       </div>
       <AppMain />
-      <Settings v-if="showSettings" />
+      <Settings v-if="showSettings === '1'" />
     </div>
   </div>
 </template>

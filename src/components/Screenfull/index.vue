@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <svg-icon :name="isFullscreen ? 'exit-fullscreen' : 'fullscreen'" @click="click" />
-  </div>
+  <el-tooltip :content="isFullscreen ? 'exit-fullscreen' : 'fullscreen'" placement="bottom" effect="light">
+    <div>
+      <svg-icon :name="isFullscreen ? 'exit-fullscreen' : 'fullscreen'" @click="click" />
+    </div>
+  </el-tooltip>
 </template>
 
 <script lang="ts">

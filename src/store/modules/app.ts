@@ -17,11 +17,11 @@ export interface IAppState {
   size: string
 }
 /**
- * 模块装饰器
+ * @name 模块装饰器
  *
- * store | 将store对象传递到模块中
- * dynamic | 是否注册为动态模块
- * name | 动态模块时，需要注册名称
+ * @param store | 将store对象传递到模块中
+ * @param dynamic | 是否注册为动态模块
+ * @param name | 动态模块时，需要注册名称
  */
 @Module({ store, dynamic: true, name: 'app' })
 class App extends VuexModule implements IAppState {

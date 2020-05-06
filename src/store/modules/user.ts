@@ -1,9 +1,12 @@
 import store from '@/store'
 import { VuexModule, Action, Mutation, Module, getModule } from 'vuex-module-decorators'
 import { PermissionModule } from './permission'
+import { TagsViewModule } from './tags-view'
+import { SettingsModule } from './settings'
 import { getCookie, setCookie, removeCookie } from '@/utils/cookies'
 import { login, getUserInfo, refreshToken } from '@/api/users'
 import { ILoginForm, IToken, IUserInfo } from '@/api/types'
+import { resetRouter } from '@/router'
 
 interface IUserState extends IToken {
   userInfo: IUserInfo
@@ -74,6 +77,10 @@ class User extends VuexModule implements IUserState {
   public async LogOut(): Promise<void> {
     this.REMOVE_TOKEN()
     this.REMOVE_USERINFO()
+    TagsViewModule.deleteAllViews()
+    SettingsModule.resetSetting()
+    PermissionModule.ResetRoutes()
+    resetRouter()
   }
 }
 

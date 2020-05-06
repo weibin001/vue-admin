@@ -21,7 +21,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
 // import { TagsViewModule } from '@/store/modules/tags-view'
 // import { SettingsModule } from '@/store/modules/settings'
-import settings from '../../settings'
+import { settings } from '@/settings'
 @Component({ name: 'SizeSelect' })
 export default class extends Vue {
   private sizeOptions = [
