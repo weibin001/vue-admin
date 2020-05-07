@@ -5,6 +5,7 @@ export default {
     articleList: 'ArticleList',
     articleDetail: 'ArticleDetail',
     publishArticle: 'PublishArticle',
+    premission: 'PremissionManager',
     ele: 'ElementUI'
   },
   navbar: {

@@ -316,6 +316,30 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+  /users/updateUserRole:
+    post:
+      tags:
+        - users
+      summary: Get new token
+      description: Return token
+      operationId: updateUserRole
+      security:
+        - AccessTokenAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    type: object
+        401:
+          $ref: '#/components/responses/Unauthorized'
 components:
   securitySchemes:
     AccessTokenAuth:

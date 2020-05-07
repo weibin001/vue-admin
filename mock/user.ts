@@ -200,3 +200,28 @@ export const getUserInfo = (req: Request, res: Response) => {
     message: ''
   })
 }
+
+export const updateUserRole = (req: Request, res: Response) => {
+  const accessToken = req.header('X-Access-Token')
+  const [account] = accessToken ? accessToken.split('token') : []
+  const index = userList.findIndex(item => item.account === account)
+  const { role } = req.body
+  if (!role) {
+    return res.status(500).json({
+      code: 50000,
+      message: 'error',
+      data: null
+    })
+  }
+  userList[index].roles[0] = role
+  const routes: IRoute[] = userList[index].roles.reduce(
+    (result: IRoute[], item: string) =>
+      Object.keys(allRoutes).includes(item) ? [...result, ...allRoutes[item]] : result,
+    [] as IRoute[]
+  )
+  return res.json({
+    code: 20000,
+    data: { ...userList[index], routes },
+    message: ''
+  })
+}

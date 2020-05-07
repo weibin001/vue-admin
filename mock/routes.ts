@@ -75,6 +75,93 @@ const adminRoutes: IRoute[] = [
     ]
   },
   {
+    path: '/premission',
+    component: 'Layout',
+    redirect: '/premission',
+    meta: {
+      icon: 'lock',
+      title: 'premission'
+    },
+    children: [
+      {
+        path: '',
+        component: 'premission/index',
+        name: 'Premission',
+        meta: {
+          title: 'premission',
+          icon: 'lock'
+          // icon: 'dashboard'
+          // affix: true
+        }
+      }
+    ]
+  },
+  {
+    path: 'https://element.eleme.cn/#/zh-CN',
+    meta: {
+      title: 'ele',
+      icon: 'example'
+    }
+  }
+]
+const editorRoutes: IRoute[] = [
+  {
+    path: '/',
+    component: 'Layout',
+    redirect: '/dashboard',
+    meta: {
+      icon: 'dashboard'
+    },
+    children: [
+      {
+        path: 'dashboard',
+        component: 'dashboard/index',
+        name: 'Dashboard',
+        meta: {
+          title: 'dashboard',
+          icon: 'dashboard'
+          // affix: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/article',
+    component: 'Layout',
+    redirect: '/article/list',
+    meta: {
+      title: 'article',
+      icon: 'example'
+    },
+    children: [
+      {
+        path: 'list',
+        component: 'article/list',
+        name: 'ArticleList',
+        meta: {
+          title: 'articleList'
+        }
+      },
+      {
+        path: 'detail/:id',
+        component: 'article/detail',
+        name: 'ArticleDetail',
+        meta: {
+          title: 'articleDetail',
+          hidden: true
+        }
+      },
+      {
+        path: 'publish',
+        component: 'article/publish',
+        name: 'PublishArticle',
+        meta: {
+          title: 'publishArticle'
+        }
+      }
+    ]
+  },
+  {
     path: 'https://element.eleme.cn/#/zh-CN',
     meta: {
       title: 'ele',
@@ -84,5 +171,6 @@ const adminRoutes: IRoute[] = [
 ]
 
 export const routes: { [propsName: string]: IRoute[] } = {
-  admin: adminRoutes
+  admin: adminRoutes,
+  editor: editorRoutes
 }

@@ -5,6 +5,7 @@ export default {
     articleList: '文章列表',
     articleDetail: '文章详情',
     publishArticle: '发布文章',
+    premission: '权限管理',
     ele: 'ElementUI'
   },
   navbar: {

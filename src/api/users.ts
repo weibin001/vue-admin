@@ -9,3 +9,4 @@ export const login = (data: ILoginForm) =>
 
 export const getUserInfo = () => service({ url: '/users/userInfo', method: 'get' })
 export const refreshToken = (data: { token: string }) => service({ url: '/users/refreshToken', method: 'post', data })
+export const updateUserRole = (data: { role: string }) => service({ url: 'users/updateUserRole', method: 'post', data })
