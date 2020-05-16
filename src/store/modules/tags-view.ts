@@ -37,6 +37,11 @@ class TagsView extends VuexModule implements ITagsViewState {
   }
 
   @Mutation
+  private UPDATE_VISITED_VIEW(views: ITagsView[]) {
+    this.visitedViews = views
+  }
+
+  @Mutation
   private DEL_OTHERS_VISITED_VIEWS(view: ITagsView) {
     this.visitedViews = this.visitedViews.filter(v => {
       return v.meta.affix || v.path === view.path
@@ -103,6 +108,11 @@ class TagsView extends VuexModule implements ITagsViewState {
     this.DEL_VISITED_VIEW(view)
     this.DEL_CACHED_VIEW(view)
     return Promise.resolve()
+  }
+
+  @Action({ commit: 'UPDATE_VISITED_VIEW' })
+  public async updateView(views: ITagsView[]) {
+    return views
   }
 
   @Action

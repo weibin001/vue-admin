@@ -16,3 +16,17 @@
 .breadcrumb-leave-active {
   position: absolute;
 }
+
+.tags-view-item {
+  transition: width 0.1s ease-in;
+}
+.tags-view-item.tags-view-enter,
+.tags-view-item.tags-view-leave-to {
+  width: 32px;
+}
+.tags-view-item.tags-view-enter-to {
+  width: 140px;
+}
+.tags-view-item.tags-view-leave-active {
+  position: absolute;
+}

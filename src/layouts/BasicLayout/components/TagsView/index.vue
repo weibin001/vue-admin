@@ -1,31 +1,33 @@
 <template>
   <div class="tags-view-container">
-    <transition-group class="tags-view-wrapper" name="el-zoom-in-center" tag="ul">
-      <router-link
-        class="tags-view-item"
-        tag="li"
-        :to="{ path: tag.path }"
-        v-for="tag in visitedViews"
-        :key="tag.path"
-        @contextmenu.prevent.stop.native="openContextMenu($event, tag)"
-        :title="$t('route.' + tag.meta.title)"
-      >
-        <svg-icon
-          :class="{ 'svg-loading': loadingViews.includes(tag.name) }"
-          :name="tag.meta && tag.meta.icon ? tag.meta.icon : 'earth'"
-          width="1.2em"
-          height="1.2em"
-        />
-        <span class="tags-view-title">
-          {{ $t('route.' + tag.meta.title) }}
-        </span>
-        <div class="tags-view-icon-wrapper">
-          <span v-if="!tag.meta.affix" class="tags-view-icon" @click.prevent.stop="closeSelectedTag(tag)">
-            <i class="el-icon-close"></i>
+    <draggable class="tags-view-draggable" v-model="visitedViews" removeCloneOnHide>
+      <transition-group tag="ul" name="tags-view" class="tags-view-wrapper">
+        <router-link
+          class="tags-view-item"
+          tag="li"
+          :to="{ path: tag.path }"
+          v-for="tag in visitedViews"
+          :key="tag.path"
+          @contextmenu.prevent.stop.native="openContextMenu($event, tag)"
+          :title="$t('route.' + tag.meta.title)"
+        >
+          <svg-icon
+            :class="{ 'svg-loading': loadingViews.includes(tag.name) }"
+            :name="tag.meta && tag.meta.icon ? tag.meta.icon : 'earth'"
+            width="1.2em"
+            height="1.2em"
+          />
+          <span class="tags-view-title">
+            {{ $t('route.' + tag.meta.title) }}
           </span>
-        </div>
-      </router-link>
-    </transition-group>
+          <div class="tags-view-icon-wrapper">
+            <span v-if="!tag.meta.affix" class="tags-view-icon" @click.prevent.stop="closeSelectedTag(tag)">
+              <i class="el-icon-close"></i>
+            </span>
+          </div>
+        </router-link>
+      </transition-group>
+    </draggable>
     <context-menu ref="popper" :visible.sync="visible" :left="left" :top="top">
       <li class="context-menu-item" @click="refreshSelectedTag(selectedTag)">重新加载</li>
       <li class="context-menu-item" @click="openBlankSelectedTag(selectedTag)">将标签页移至新窗口</li>
@@ -45,6 +47,7 @@
 
 <script lang="ts">
 import path from 'path'
+import Draggable from 'vuedraggable'
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { RouteConfig } from 'vue-router'
 import ContextMenu from './ContextMenu.vue'
@@ -53,7 +56,8 @@ import { PermissionModule } from '@/store/modules/permission'
 @Component({
   name: 'TagsView',
   components: {
-    ContextMenu
+    ContextMenu,
+    Draggable
   }
 })
 export default class extends Vue {
@@ -64,6 +68,9 @@ export default class extends Vue {
 
   get visitedViews() {
     return TagsViewModule.visitedViews
+  }
+  set visitedViews(views) {
+    TagsViewModule.updateView(views)
   }
 
   get loadingViews() {
@@ -139,7 +146,7 @@ export default class extends Vue {
     const { name } = this.$route
     const index = this.visitedViews.findIndex(item => item.name === tag.name)
     await TagsViewModule.deleteView(tag)
-    name === tag.name && this.changeView(index === this.visitedViews.length - 1 ? index : index - 1)
+    name === tag.name && this.changeView(index && index !== this.visitedViews.length - 1 ? index - 1 : index)
   }
 
   private closeOthersTags(tag: ITagsView) {
@@ -182,6 +189,7 @@ export default class extends Vue {
   mounted() {
     this.initTags()
     this.addTags()
+    this.dragSelectedTag()
   }
 }
 </script>
@@ -195,6 +203,9 @@ export default class extends Vue {
   background-color: #fff;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  .tags-view-draggable {
+    height: 100%;
+  }
   .tags-view-wrapper {
     width: 100%;
     height: 100%;
@@ -205,8 +216,9 @@ export default class extends Vue {
   }
   .tags-view-item {
     position: relative;
+    // flex-shrink: 1;
+    // width: 140px;
     flex: 0 1 140px;
-    min-width: 0;
     height: 28px;
     // line-height: 26px;
     display: inline-flex;
