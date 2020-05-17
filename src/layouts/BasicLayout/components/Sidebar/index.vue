@@ -1,6 +1,6 @@
 <template>
   <div :class="{ 'has-logo': showSidebarLogo === '1' }">
-    <SidebarLogo v-if="showSidebarLogo" :isCollapse="isCollapse" />
+    <SidebarLogo v-if="showSidebarLogo === '1'" :isCollapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper" :noresize="true">
       <el-menu
         ref="el-menu"
