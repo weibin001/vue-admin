@@ -6,6 +6,8 @@ export default {
     articleDetail: '文章详情',
     publishArticle: '发布文章',
     premission: '权限管理',
+    components: '组件',
+    Tinymce: '富文本编辑器',
     ele: 'ElementUI'
   },
   navbar: {

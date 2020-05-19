@@ -90,8 +90,26 @@ const adminRoutes: IRoute[] = [
         meta: {
           title: 'premission',
           icon: 'lock'
-          // icon: 'dashboard'
-          // affix: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/components',
+    component: 'Layout',
+    meta: {
+      title: 'components',
+      icon: 'component',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: '/components/tinymce',
+        component: 'components/tinymce',
+        name: 'Tinymce',
+        meta: {
+          title: 'Tinymce',
+          activedMenu: '/components'
         }
       }
     ]

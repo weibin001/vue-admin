@@ -3,20 +3,21 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
+import ResizeMixin from './mixins/resize'
 import echarts, { EChartOption } from 'echarts'
 @Component({
   name: 'LineChart'
 })
-export default class extends Vue {
+export default class extends Mixins(ResizeMixin) {
   @Prop({ default: 'chart' }) private className!: string
   @Prop({ default: 'chart' }) private id!: string
   @Prop({ default: '100%' }) private width?: string
   @Prop({ default: '300px' }) private height!: string
-  @Prop({ default: () => ({}) }) private options?: EChartOption
+  @Prop({ default: () => ({}) }) private options?: EChartOption<EChartOption.SeriesLine>
 
-  private chart: echarts.ECharts | null = null
-  private initOptions = {
+  // protected chart: echarts.ECharts | null = null
+  private initOptions: EChartOption<EChartOption.SeriesLine> = {
     xAxis: {
       data: [],
       boundaryGap: false,
@@ -88,7 +89,7 @@ export default class extends Vue {
     options && this.initChart()
   }
 
-  private setOptions<T extends EChartOption>(options: T): T {
+  private setOptions<T extends EChartOption<EChartOption.SeriesLine>>(options: T): T {
     return Object.assign({}, this.initOptions, options)
   }
 
@@ -97,20 +98,13 @@ export default class extends Vue {
     this.chart && this.chart.setOption(this.setOptions(this.options || {}))
   }
 
-  private chartResizeHandler() {
-    console.log(this.$el)
-    this.chart && this.chart.resize()
-  }
-
   mounted() {
     this.$nextTick(() => {
       this.initChart()
-      window.addEventListener('resize', this.chartResizeHandler)
     })
   }
 
   beforeDestroy() {
-    window.removeEventListener('resize', this.chartResizeHandler)
     if (!this.chart) return
     this.chart.dispose()
     this.chart = null

@@ -10401,6 +10401,11 @@ timsort@^0.3.0:
   resolved "https://registry.npm.taobao.org/timsort/download/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
+tinymce@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.npm.taobao.org/tinymce/download/tinymce-5.2.2.tgz#1ac77cce1565b54932b4e612d2fd9c07b687f238"
+  integrity sha1-Gsd8zhVltUkytOYS0v2cB7aH8jg=
+
 tmp@0.1.0:
   version "0.1.0"
   resolved "https://registry.npm.taobao.org/tmp/download/tmp-0.1.0.tgz#ee434a4e22543082e294ba6201dcc6eafefa2877"

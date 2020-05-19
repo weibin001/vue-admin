@@ -6,6 +6,8 @@ export default {
     articleDetail: 'ArticleDetail',
     publishArticle: 'PublishArticle',
     premission: 'PremissionManager',
+    components: 'Components',
+    Tinymce: 'Tinymce',
     ele: 'ElementUI'
   },
   navbar: {
