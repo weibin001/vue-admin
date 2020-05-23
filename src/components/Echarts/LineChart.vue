@@ -94,8 +94,8 @@ export default class extends Mixins(ResizeMixin) {
   }
 
   private initChart() {
-    this.chart = this.chart ?? echarts.init(this.$el as HTMLDivElement, 'macarons')
-    this.chart && this.chart.setOption(this.setOptions(this.options || {}))
+    this.chart = this.chart || echarts.init(this.$el as HTMLDivElement, 'macarons')
+    this.chart.setOption(this.setOptions(this.options || {}))
   }
 
   mounted() {

@@ -13,6 +13,7 @@
     "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^3.2.1",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "echarts": "^4.7.0",

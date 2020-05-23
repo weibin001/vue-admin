@@ -13,17 +13,17 @@
           <LineChart height="350px" :options="lineChartOption" />
         </el-card>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="12">
+      <el-col :xs="{ span: 24 }" :sm="{ span: 24 }" :lg="{ span: 12 }" :xl="{ span: 12 }">
         <el-card shadow="hover">
           <PieChart style="height:300px" :options="pieChartOption" />
         </el-card>
       </el-col>
-      <!-- <el-col :xs="24" :sm="24" :lg="12">
+      <el-col :xs="{ span: 24 }" :sm="{ span: 24 }" :lg="{ span: 12 }">
         <el-card shadow="hover">
           <div style="height:300px"></div>
         </el-card>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="16">
+      <!-- <el-col :xs="24" :sm="24" :lg="16">
         <el-card shadow="hover">111</el-card>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">

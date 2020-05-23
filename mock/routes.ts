@@ -106,7 +106,7 @@ const adminRoutes: IRoute[] = [
       {
         path: '/components/tinymce',
         component: 'components/tinymce',
-        name: 'Tinymce',
+        name: 'TinymceDemo',
         meta: {
           title: 'Tinymce',
           activedMenu: '/components'

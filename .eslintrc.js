@@ -39,7 +39,7 @@ module.exports = {
     'vue/arrow-spacing': 'error',
     'vue/block-spacing': 'error',
     'vue/brace-style': 'error',
-    'vue/camelcase': 'error',
+    'vue/camelcase': 0,
     'vue/comma-dangle': 'error',
     'vue/component-name-in-template-casing': 'error',
     'vue/eqeqeq': 'error',
@@ -48,6 +48,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-explicit-any': 'off'
+    // '@typescript-eslint/camelcase': 'off'
   },
   overrides: [
     {

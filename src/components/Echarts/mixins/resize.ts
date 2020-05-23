@@ -12,14 +12,46 @@ export default class extends Vue {
     this.chart && this.chart.resize()
   }
 
-  mounted() {
-    window.addEventListener('resize', this.chartResizeHandler)
+  protected sidebarResizeHandler(e: TransitionEvent) {
+    console.log(e)
+    e.propertyName === 'width' && this.chartResizeHandler && this.chartResizeHandler()
+  }
+
+  private initResizeEvent() {
+    console.log(111)
+    this.chartResizeHandler && window.addEventListener('resize', this.chartResizeHandler)
+  }
+
+  private destroyResizeEvent() {
+    this.chartResizeHandler && window.removeEventListener('resize', this.chartResizeHandler)
+  }
+
+  private initSidebarResize() {
     this.sidebar = document.querySelector('.sidebar-container') || null
-    this.sidebar && this.sidebar.addEventListener('transitionend', this.chartResizeHandler)
+    this.sidebar && this.sidebar.addEventListener('transitionend', this.sidebarResizeHandler as EventListener)
+  }
+
+  private destroySiderbarResize() {
+    this.sidebar && this.sidebar.removeEventListener('transitionend', this.sidebarResizeHandler as EventListener)
+  }
+
+  mounted() {
+    this.initResizeEvent()
+    this.initSidebarResize()
+  }
+
+  activated() {
+    this.initResizeEvent()
+    this.initSidebarResize()
+  }
+
+  deactivated() {
+    this.destroyResizeEvent()
+    this.destroySiderbarResize()
   }
 
   beforeDestroyed() {
-    window.removeEventListener('resize', this.chartResizeHandler)
-    this.sidebar && this.sidebar.removeEventListener('transitionend', this.chartResizeHandler)
+    this.destroyResizeEvent()
+    this.destroySiderbarResize()
   }
 }

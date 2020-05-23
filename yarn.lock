@@ -1012,6 +1012,11 @@
     error-stack-parser "^2.0.0"
     string-width "^2.0.0"
 
+"@tinymce/tinymce-vue@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.npm.taobao.org/@tinymce/tinymce-vue/download/@tinymce/tinymce-vue-3.2.1.tgz#1e9f78bd018e04f09effe6e761ef91518841c222"
+  integrity sha1-Hp94vQGOBPCe/+bnYe+RUYhBwiI=
+
 "@types/babel__core@^7.1.0":
   version "7.1.4"
   resolved "https://registry.npm.taobao.org/@types/babel__core/download/@types/babel__core-7.1.4.tgz#5c5569cc40e5f2737dfc00692f5444e871e4a234"
