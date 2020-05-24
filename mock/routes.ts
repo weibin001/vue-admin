@@ -111,6 +111,24 @@ const adminRoutes: IRoute[] = [
           title: 'Tinymce',
           activedMenu: '/components'
         }
+      },
+      {
+        path: '/components/markdown',
+        component: 'components/markdown',
+        name: 'MarkdownDemo',
+        meta: {
+          title: 'Markdown',
+          activedMenu: '/components'
+        }
+      },
+      {
+        path: '/components/json-editor',
+        component: 'components/json-editor',
+        name: 'JsonEditor',
+        meta: {
+          title: 'JsonEditor',
+          activedMenu: '/components'
+        }
       }
     ]
   },

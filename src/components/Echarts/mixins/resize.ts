@@ -18,7 +18,6 @@ export default class extends Vue {
   }
 
   private initResizeEvent() {
-    console.log(111)
     this.chartResizeHandler && window.addEventListener('resize', this.chartResizeHandler)
   }
 

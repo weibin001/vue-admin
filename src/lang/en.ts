@@ -8,6 +8,8 @@ export default {
     premission: 'PremissionManager',
     components: 'Components',
     Tinymce: 'Tinymce',
+    Markdown: 'Markdown',
+    JsonEditor: 'Json Editor',
     ele: 'ElementUI'
   },
   navbar: {

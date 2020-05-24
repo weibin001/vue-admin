@@ -8,6 +8,8 @@ export default {
     premission: '权限管理',
     components: '组件',
     Tinymce: '富文本编辑器',
+    Markdown: 'Markdown',
+    JsonEditor: 'JSON编辑器',
     ele: 'ElementUI'
   },
   navbar: {

@@ -1,9 +1,7 @@
 import Vue, { VNode } from 'vue'
-
 declare global {
   interface Window {
-    WebKitMutationObserver: MutationObserver
-    MozMutationObserver: MutationObserver
+    jsonlint: any
   }
   namespace JSX {
     // tslint:disable no-empty-interface
