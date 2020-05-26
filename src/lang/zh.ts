@@ -10,6 +10,7 @@ export default {
     Tinymce: '富文本编辑器',
     Markdown: 'Markdown',
     JsonEditor: 'JSON编辑器',
+    Mixins: '小组件',
     ele: 'ElementUI'
   },
   navbar: {

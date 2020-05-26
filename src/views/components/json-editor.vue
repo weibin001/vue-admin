@@ -55,4 +55,9 @@ export default class extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.components-container {
+  margin: 30px 50px;
+  position: relative;
+}
+</style>

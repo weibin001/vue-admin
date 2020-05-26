@@ -10,6 +10,7 @@ export default {
     Tinymce: 'Tinymce',
     Markdown: 'Markdown',
     JsonEditor: 'Json Editor',
+    Mixins: 'Mixins',
     ele: 'ElementUI'
   },
   navbar: {

@@ -77,7 +77,7 @@ export default class extends Vue {
   pointer-events: auto;
   color: #fff;
   line-height: 48px;
-  background-color: $menuActiveText;
+  background-color: $primaryColor;
   i {
     font-size: 24px;
     line-height: 48px;

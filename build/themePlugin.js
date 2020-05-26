@@ -4,10 +4,12 @@ module.exports = [
   new ThemeColorReplacer({
     fileName: 'theme-colors.[contenthash:8].css',
     matchColors: [
-      ...forElementUI.getElementUISeries('#1890ff') //element-ui主色系列
-      // '#0cdd3a', //自定义颜色
+      ...forElementUI.getElementUISeries('#409eff') //element-ui主色系列
+      // '#1890ff' //自定义颜色
       // '#c655dd'
     ],
-    changeSelector: forElementUI.changeSelector
+    changeSelector: forElementUI.changeSelector,
+    injectCss: false, // optional. Inject css text into js file, no need to download `theme-colors-xxx.css` any more.
+    isJsUgly: process.env.NODE_ENV !== 'development'
   })
 ]

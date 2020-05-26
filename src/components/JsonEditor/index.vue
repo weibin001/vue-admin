@@ -46,5 +46,20 @@ export default class extends Vue {
 .json-editor-container {
   height: 100%;
   position: relative;
+  ::v-deep {
+    .CodeMirror {
+      height: auto;
+      min-height: 300px;
+      font-family: inherit;
+    }
+
+    .CodeMirror-scroll {
+      min-height: 300px;
+    }
+
+    .cm span.cm-string {
+      color: #f08047;
+    }
+  }
 }
 </style>

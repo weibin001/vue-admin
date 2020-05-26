@@ -6,8 +6,9 @@
 
 <script lang="ts">
 import 'tinymce/tinymce'
-import 'tinymce/themes/silver' // Import themes
+import 'tinymce/themes/silver/theme' // Import themes
 import 'tinymce/themes/mobile'
+import 'tinymce/icons/default/icons'
 import 'tinymce/plugins/advlist' // Any plugins you want to use has to be imported
 import 'tinymce/plugins/anchor'
 import 'tinymce/plugins/autolink'
@@ -32,7 +33,6 @@ import 'tinymce/plugins/preview'
 import 'tinymce/plugins/print'
 import 'tinymce/plugins/save'
 import 'tinymce/plugins/searchreplace'
-import 'tinymce/plugins/spellchecker'
 import 'tinymce/plugins/tabfocus'
 import 'tinymce/plugins/table'
 import 'tinymce/plugins/template'
@@ -83,9 +83,11 @@ export default class extends Vue {
       body_class: 'panel-body',
       object_resizing: false, //调整大小控件开关
       branding: false, //去除右下角的'由tinymce驱动
+      browser_spellcheck: true,
       toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
       menubar: this.menubar, //配置菜单栏是否启用的项目和显示的顺序
       plugins: plugins,
+      icons: 'custom',
       language: this.language === 'zh' ? `${this.language}_CN` : this.language,
       language_url: this.language === 'en' ? '' : `${process.env.BASE_URL}tinymce/langs/${this.language}_CN.js`,
       skin_url: `${process.env.BASE_URL}tinymce/skins/`,
@@ -102,7 +104,6 @@ export default class extends Vue {
       convert_urls: false,
       imagetools_cors_hosts: [],
       images_upload_handler: (blobInfo: any, success: Function, failure: Function) => {
-        //TODO
         const file = blobInfo.blob()
         this.$emit('imagesUpload', { file, success, failure })
       },

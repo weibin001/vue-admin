@@ -55,10 +55,7 @@ export default class extends Vue {
     return SettingsModule.showSidebarLogo
   }
   private get menuActiveTextColor() {
-    if (SettingsModule.sidebarTextTheme) {
-      return SettingsModule.theme
-    }
-    return variables.menuActiveText
+    return SettingsModule.sidebarTextTheme === '0' ? variables.menuActiveText : SettingsModule.theme
   }
   private get variables() {
     return variables

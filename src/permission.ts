@@ -6,6 +6,13 @@ import { UserModule } from '@/store/modules/user'
 import { PermissionModule } from '@/store/modules/permission'
 import { SettingsModule } from '@/store/modules/settings'
 import { changeThemeColor } from '@/utils/themeColorClient'
+import i18n from '@/lang'
+import { settings } from './settings'
+
+const getPageTitle = (key: string) => {
+  const hasKey = i18n.te(`route.${key}`)
+  return hasKey ? `${i18n.t(`route.${key}`)}` : settings.title
+}
 
 NProgress.configure({ showSpinner: false })
 router.beforeEach(async (to: Route, from: Route, next: Function) => {
@@ -35,6 +42,7 @@ router.beforeEach(async (to: Route, from: Route, next: Function) => {
   // NProgress.done()
 })
 
-router.afterEach(() => {
+router.afterEach((to: Route) => {
   NProgress.done()
+  document.title = getPageTitle(to.meta.title)
 })

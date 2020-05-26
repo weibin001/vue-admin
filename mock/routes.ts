@@ -129,6 +129,15 @@ const adminRoutes: IRoute[] = [
           title: 'JsonEditor',
           activedMenu: '/components'
         }
+      },
+      {
+        path: '/components/mixins',
+        component: 'components/mixins',
+        name: 'Mixins',
+        meta: {
+          title: 'Mixins',
+          activedMenu: '/components'
+        }
       }
     ]
   },
