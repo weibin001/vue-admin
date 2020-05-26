@@ -4,7 +4,7 @@ import '@/styles/index.scss'
 import ElementUI from 'element-ui'
 import SvgIcon from 'vue-svgicon'
 
-import Vue from 'vue'
+import Vue, { DirectiveOptions } from 'vue'
 import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
@@ -13,6 +13,7 @@ import i18n from '@/lang'
 import '@/icons/components'
 import '@/permission'
 import './pwa/registerServiceWorker'
+import * as directives from '@/directives'
 
 Vue.use(ElementUI, {
   size: AppModule.size,
@@ -23,6 +24,11 @@ Vue.use(SvgIcon, {
   tagName: 'svg-icon',
   defaultWidth: '1em',
   defaultHeight: '1em'
+})
+
+// Register global directives
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, (directives as { [key: string]: DirectiveOptions })[key])
 })
 
 Vue.config.productionTip = false

@@ -28,21 +28,34 @@
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>111</span>
+            <span>图片hover效果</span>
+          </div>
+          <div class="component-item">
+            <PanThumb :image="logo" width="100px" height="100px" :z-index="2">
+              surprise!!
+            </PanThumb>
           </div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>111</span>
+            <span>水波纹 waves v-directive</span>
+          </div>
+          <div class="component-item">
+            <el-button v-waves type="primary">
+              水波纹效果
+            </el-button>
           </div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>111</span>
+            <span>hover text</span>
+          </div>
+          <div class="component-item">
+            <Mallki class-name="mallki-text" text="vue-admin" />
           </div>
         </el-card>
       </el-col>
@@ -53,10 +66,14 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import MaterialInput from '@/components/MaterialInput/index.vue'
+import PanThumb from '@/components/PanThumb/index.vue'
+import Mallki from '@/components/TextHoverEffect/Mallki.vue'
 @Component({
   name: 'MixinComponets',
   components: {
-    MaterialInput
+    MaterialInput,
+    PanThumb,
+    Mallki
   }
 })
 export default class extends Vue {
@@ -64,6 +81,8 @@ export default class extends Vue {
   private demo = {
     title: ''
   }
+
+  private logo = require('@/assets/icon-man.jpeg')
 }
 </script>
 
@@ -151,5 +170,8 @@ export default class extends Vue {
 }
 .box-card {
   height: 100%;
+}
+.component-item {
+  min-height: 100px;
 }
 </style>
