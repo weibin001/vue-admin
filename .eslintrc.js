@@ -47,7 +47,8 @@ module.exports = {
     'vue/match-component-file-name': 'error',
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/interface-name-prefix': 0,
-    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-empty-function': 1
     // '@typescript-eslint/camelcase': 'off'
   },
   overrides: [

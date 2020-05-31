@@ -87,7 +87,7 @@ export default class extends Vue {
       toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
       menubar: this.menubar, //配置菜单栏是否启用的项目和显示的顺序
       plugins: plugins,
-      icons: 'custom',
+      // icons: 'custom',
       language: this.language === 'zh' ? `${this.language}_CN` : this.language,
       language_url: this.language === 'en' ? '' : `${process.env.BASE_URL}tinymce/langs/${this.language}_CN.js`,
       skin_url: `${process.env.BASE_URL}tinymce/skins/`,

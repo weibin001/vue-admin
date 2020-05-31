@@ -11,7 +11,7 @@
       </div>
     </el-card>
     <el-row :gutter="20" style="margin-top:50px;height:100%" type="flex">
-      <el-col :span="6">
+      <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>Material Design 的input</span>
@@ -25,7 +25,7 @@
           </el-form>
         </el-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>图片hover效果</span>
@@ -37,7 +37,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>水波纹 waves v-directive</span>
@@ -49,7 +49,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="6">
+      <!-- <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>hover text</span>
@@ -58,8 +58,35 @@
             <Mallki class-name="mallki-text" text="vue-admin" />
           </div>
         </el-card>
+      </el-col> -->
+    </el-row>
+    <el-row style="margin-top:50px;height:100%" :gutter="20">
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>draggable dialog</span>
+          </div>
+          <div class="component-item">
+            <el-button type="primary" @click="dialogTableVisible = true">
+              Open a Draggable Dialog
+            </el-button>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>draggable dialog</span>
+          </div>
+          <div class="component-item">
+            <el-button type="primary" @click="dialogTableVisible = true">
+              Open a Draggable Dialog
+            </el-button>
+          </div>
+        </el-card>
       </el-col>
     </el-row>
+    <DraggableDialog :visible.sync="dialogTableVisible" title="Draggable Dialog" />
   </div>
 </template>
 
@@ -68,12 +95,14 @@ import { Vue, Component } from 'vue-property-decorator'
 import MaterialInput from '@/components/MaterialInput/index.vue'
 import PanThumb from '@/components/PanThumb/index.vue'
 import Mallki from '@/components/TextHoverEffect/Mallki.vue'
+import DraggableDialog from '@/components/DraggableDialog/index.vue'
 @Component({
   name: 'MixinComponets',
   components: {
     MaterialInput,
     PanThumb,
-    Mallki
+    Mallki,
+    DraggableDialog
   }
 })
 export default class extends Vue {
@@ -83,6 +112,8 @@ export default class extends Vue {
   }
 
   private logo = require('@/assets/icon-man.jpeg')
+
+  protected dialogTableVisible = false
 }
 </script>
 
@@ -172,6 +203,9 @@ export default class extends Vue {
   height: 100%;
 }
 .component-item {
-  min-height: 100px;
+  // min-height: 100px;
+  display: flex;
+  justify-content: center;
+  // align-items: center;
 }
 </style>

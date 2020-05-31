@@ -107,6 +107,9 @@ export default class extends Vue {
 }
 .el-submenu.is-active ::v-deep > .el-submenu__title {
   color: $subMenuActiveText !important;
+  .el-submenu__icon-arrow {
+    color: inherit;
+  }
 }
 .expand-mode {
   .el-submenu > .el-submenu__title,

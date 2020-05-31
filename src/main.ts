@@ -13,7 +13,7 @@ import i18n from '@/lang'
 import '@/icons/components'
 import '@/permission'
 import './pwa/registerServiceWorker'
-import * as directives from '@/directives'
+import directives from '@/directives'
 
 Vue.use(ElementUI, {
   size: AppModule.size,
