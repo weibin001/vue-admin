@@ -67,7 +67,7 @@ export default class extends mixins(ResizeMixin) {
   @include clearfix;
   position: relative;
   width: 100%;
-  height: 100%;
+  // height: 100%;
   .drawer-bg {
     background: #000;
     opacity: 0.3;

@@ -13,7 +13,6 @@ export default class extends Vue {
   }
 
   protected sidebarResizeHandler(e: TransitionEvent) {
-    console.log(e)
     e.propertyName === 'width' && this.chartResizeHandler && this.chartResizeHandler()
   }
 

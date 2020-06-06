@@ -23,7 +23,7 @@ export default Vue.extend({
         </div>
         <div class="number-card-wrapper">
           <p class="number-card-title">Card Title</p>
-          <VueCountTo start-val={0} end-val={number} duration={3000} />
+          <VueCountTo style="font-size:20px;font-weight: bold;" start-val={0} end-val={number} duration={3000} />
         </div>
       </div>
     )

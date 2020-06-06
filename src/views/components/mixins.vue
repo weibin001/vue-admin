@@ -10,7 +10,7 @@
         </div>
       </div>
     </el-card>
-    <el-row :gutter="20" style="margin-top:50px;height:100%" type="flex">
+    <el-row :gutter="20" style="margin-top:20px;height:100%" type="flex">
       <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
@@ -40,11 +40,18 @@
       <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>水波纹 waves v-directive</span>
+            <span>水波纹 waves && Draggable Dialog</span>
           </div>
-          <div class="component-item">
-            <el-button v-waves type="primary">
+          <div
+            class="component-item"
+            style="flex-flow:row wrap;align-items:center; 
+            justify-content: flex-start;"
+          >
+            <el-button v-waves type="primary" style="margin:0 10px 10px 0">
               水波纹效果
+            </el-button>
+            <el-button type="primary" @click="dialogTableVisible = true" style="margin:0 10px 10px 0">
+              Open a Draggable Dialog
             </el-button>
           </div>
         </el-card>
@@ -60,31 +67,22 @@
         </el-card>
       </el-col> -->
     </el-row>
-    <el-row style="margin-top:50px;height:100%" :gutter="20">
-      <el-col :span="12">
+    <el-row style="margin-top:20px;height:100%;flex-wrap:wrap" :gutter="20" type="flex">
+      <el-col :span="24">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>draggable dialog</span>
+            <span>dropzone</span>
           </div>
           <div class="component-item">
-            <el-button type="primary" @click="dialogTableVisible = true">
-              Open a Draggable Dialog
-            </el-button>
+            <Dropzone id="myVueDropzone" :header="{ accessToken }" url="https://localhost:8000" />
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>draggable dialog</span>
-          </div>
-          <div class="component-item">
-            <el-button type="primary" @click="dialogTableVisible = true">
-              Open a Draggable Dialog
-            </el-button>
-          </div>
-        </el-card>
-      </el-col>
+    </el-row>
+    <el-row style="margin-top:50px;height:100%" :gutter="20" type="flex">
+      <el-col :span="8"></el-col>
+      <el-col :span="8"></el-col>
+      <el-col :span="8"></el-col>
     </el-row>
     <DraggableDialog :visible.sync="dialogTableVisible" title="Draggable Dialog" />
   </div>
@@ -92,17 +90,20 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { UserModule } from '@/store/modules/user'
 import MaterialInput from '@/components/MaterialInput/index.vue'
 import PanThumb from '@/components/PanThumb/index.vue'
 import Mallki from '@/components/TextHoverEffect/Mallki.vue'
 import DraggableDialog from '@/components/DraggableDialog/index.vue'
+import Dropzone from '@/components/Dropzone/index.vue'
 @Component({
   name: 'MixinComponets',
   components: {
     MaterialInput,
     PanThumb,
     Mallki,
-    DraggableDialog
+    DraggableDialog,
+    Dropzone
   }
 })
 export default class extends Vue {
@@ -114,6 +115,10 @@ export default class extends Vue {
   private logo = require('@/assets/icon-man.jpeg')
 
   protected dialogTableVisible = false
+
+  protected get accessToken() {
+    return UserModule.accessToken
+  }
 }
 </script>
 
@@ -203,6 +208,7 @@ export default class extends Vue {
   height: 100%;
 }
 .component-item {
+  position: relative;
   // min-height: 100px;
   display: flex;
   justify-content: center;
