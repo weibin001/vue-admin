@@ -44,7 +44,7 @@
           </div>
           <div
             class="component-item"
-            style="flex-flow:row wrap;align-items:center; 
+            style="flex-flow:row wrap;align-items:center;
             justify-content: flex-start;"
           >
             <el-button v-waves type="primary" style="margin:0 10px 10px 0">
@@ -79,12 +79,57 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row style="margin-top:50px;height:100%" :gutter="20" type="flex">
-      <el-col :span="8"></el-col>
-      <el-col :span="8"></el-col>
-      <el-col :span="8"></el-col>
+    <el-row style="margin-top:20px;height:100%" :gutter="20" type="flex">
+      <el-col :span="8">
+        <el-card class="draggable-spectaculars todo">
+          <div slot="header">Todo</div>
+          <draggable style="width:100%;min-height:52px" group="mission" handle=".move" :forceFallback="true">
+            <div class="draggable-spectaculars-wrap" @click="drawer = true">
+              <div class="draggable-spectaculars-left">
+                <p>a</p>
+              </div>
+              <el-divider direction="vertical"></el-divider>
+              <div class="draggable-spectaculars-right">
+                <i class="move el-icon-rank"></i>
+              </div>
+            </div>
+            <div class="draggable-spectaculars-wrap" @click="drawer = true">
+              <div class="draggable-spectaculars-left">
+                <p>b</p>
+              </div>
+              <el-divider direction="vertical"></el-divider>
+              <div class="draggable-spectaculars-right">
+                <i class="move el-icon-rank"></i>
+              </div>
+            </div>
+          </draggable>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card class="draggable-spectaculars working">
+          <div slot="header">Working</div>
+          <draggable
+            style="width:100%;min-height:52px"
+            group="mission"
+            handle=".move"
+            :forceFallback="true"
+          ></draggable>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card class="draggable-spectaculars done">
+          <div slot="header">Done</div>
+          <draggable
+            style="width:100%;min-height:52px"
+            group="mission"
+            handle=".move"
+            :forceFallback="true"
+          ></draggable>
+        </el-card>
+      </el-col>
     </el-row>
     <DraggableDialog :visible.sync="dialogTableVisible" title="Draggable Dialog" />
+    <el-drawer title="drawer" :visible.sync="drawer"> </el-drawer>
   </div>
 </template>
 
@@ -96,6 +141,7 @@ import PanThumb from '@/components/PanThumb/index.vue'
 import Mallki from '@/components/TextHoverEffect/Mallki.vue'
 import DraggableDialog from '@/components/DraggableDialog/index.vue'
 import Dropzone from '@/components/Dropzone/index.vue'
+import Draggable from 'vuedraggable'
 @Component({
   name: 'MixinComponets',
   components: {
@@ -103,7 +149,8 @@ import Dropzone from '@/components/Dropzone/index.vue'
     PanThumb,
     Mallki,
     DraggableDialog,
-    Dropzone
+    Dropzone,
+    Draggable
   }
 })
 export default class extends Vue {
@@ -111,6 +158,8 @@ export default class extends Vue {
   private demo = {
     title: ''
   }
+
+  private drawer = false
 
   private logo = require('@/assets/icon-man.jpeg')
 
@@ -213,5 +262,66 @@ export default class extends Vue {
   display: flex;
   justify-content: center;
   // align-items: center;
+}
+.draggable-spectaculars {
+  &-wrap {
+    display: flex;
+    justify-content: flex-start;
+    // align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    & + & {
+      margin-top: 10px;
+    }
+  }
+  &-left {
+    flex: 1;
+    min-width: 0;
+  }
+  &-right {
+    flex: 0 0 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+  }
+  .move {
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: inset 1px -1px 3px rgba(0, 0, 0, 0.1);
+    cursor: move;
+  }
+  .el-divider--vertical {
+    height: auto;
+    margin: 0 10px;
+  }
+  ::v-deep {
+    .el-card__header {
+      text-align: center;
+      color: #fff;
+    }
+    .el-card__body {
+      width: 100%;
+      padding: 10px;
+      min-height: 60px;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f0f0f0;
+    }
+  }
+  &.todo ::v-deep .el-card__header {
+    background-color: #4a9ff9;
+  }
+  &.working ::v-deep .el-card__header {
+    background-color: #f9944a;
+  }
+  &.done ::v-deep .el-card__header {
+    background-color: #2ac06d;
+  }
 }
 </style>
