@@ -36,7 +36,7 @@ router.beforeEach(async (to: Route, from: Route, next: Function) => {
       }
     }
   } else {
-    await changeThemeColor('#178fff')
+    // await changeThemeColor('#178fff')
     to.path === '/login' ? next() : next(`/login?redirect=${to.path}`)
   }
   // NProgress.done()
