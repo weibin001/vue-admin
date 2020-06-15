@@ -31,9 +31,11 @@
             <span>图片hover效果</span>
           </div>
           <div class="component-item">
-            <PanThumb :image="logo" width="100px" height="100px" :z-index="2">
-              surprise!!
-            </PanThumb>
+            <pan-thumb :image="logo" width="100px" height="100px" :z-index="2">
+              <span @click="dialogVisible = true">
+                surprise!!
+              </span>
+            </pan-thumb>
           </div>
         </el-card>
       </el-col>
@@ -128,8 +130,12 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-dialog title="更换头像" :visible.sync="dialogVisible" width="720px">
+      <cropper v-bind="cropperOptions"> </cropper>
+    </el-dialog>
     <DraggableDialog :visible.sync="dialogTableVisible" title="Draggable Dialog" />
     <el-drawer title="drawer" :visible.sync="drawer"> </el-drawer>
+    <ElBacktop />
   </div>
 </template>
 
@@ -138,6 +144,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { UserModule } from '@/store/modules/user'
 import MaterialInput from '@/components/MaterialInput/index.vue'
 import PanThumb from '@/components/PanThumb/index.vue'
+import Cropper from '@/components/Cropper/index.vue'
 import Mallki from '@/components/TextHoverEffect/Mallki.vue'
 import DraggableDialog from '@/components/DraggableDialog/index.vue'
 import Dropzone from '@/components/Dropzone/index.vue'
@@ -147,6 +154,7 @@ import Draggable from 'vuedraggable'
   components: {
     MaterialInput,
     PanThumb,
+    Cropper,
     Mallki,
     DraggableDialog,
     Dropzone,
@@ -158,12 +166,24 @@ export default class extends Vue {
   private demo = {
     title: ''
   }
+  private cropperOptions = {
+    img: require('@/assets/icon-man.jpeg'),
+    outputType: 'jpg',
+    canMove: true,
+    original: false,
+    canMoveBox: true,
+    autoCrop: true,
+    centerBox: true,
+    fixedBox: true
+    // mode: 'fill'
+  }
 
+  private dialogVisible = false
   private drawer = false
 
   private logo = require('@/assets/icon-man.jpeg')
 
-  protected dialogTableVisible = false
+  private dialogTableVisible = false
 
   protected get accessToken() {
     return UserModule.accessToken

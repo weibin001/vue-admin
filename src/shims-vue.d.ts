@@ -9,3 +9,4 @@ declare module 'element-ui/lib/locale/lang/*' {
 
 declare module 'vue-count-to'
 declare module 'vue2-dropzone'
+declare module 'vue-cropper'
