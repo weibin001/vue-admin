@@ -131,7 +131,7 @@
       </el-col>
     </el-row>
     <el-dialog title="更换头像" :visible.sync="dialogVisible" width="720px">
-      <cropper v-bind="cropperOptions"> </cropper>
+      <cropper v-bind="{ ...cropperOptions, httpRequest: upload }"> </cropper>
     </el-dialog>
     <DraggableDialog :visible.sync="dialogTableVisible" title="Draggable Dialog" />
     <el-drawer title="drawer" :visible.sync="drawer"> </el-drawer>
@@ -168,7 +168,7 @@ export default class extends Vue {
   }
   private cropperOptions = {
     img: require('@/assets/icon-man.jpeg'),
-    outputType: 'jpg',
+    outputType: 'jpeg',
     canMove: true,
     original: false,
     canMoveBox: true,
@@ -187,6 +187,11 @@ export default class extends Vue {
 
   protected get accessToken() {
     return UserModule.accessToken
+  }
+
+  protected upload(file: Blob, oriFile: File) {
+    // 若无新上传文件 oriFile为null
+    console.log(file, oriFile)
   }
 }
 </script>

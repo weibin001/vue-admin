@@ -11,6 +11,7 @@ export default {
     Markdown: 'Markdown',
     JsonEditor: 'JSON编辑器',
     Mixins: '小组件',
+    Table: '表格',
     ele: 'ElementUI'
   },
   navbar: {

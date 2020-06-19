@@ -340,6 +340,28 @@ paths:
                     type: object
         401:
           $ref: '#/components/responses/Unauthorized'
+  /common/upload:
+    post:
+      tags:
+        - common
+      summary: upload file
+      description: Return token
+      operationId: uploadFile
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    type: object
+        401:
+          $ref: '#/components/responses/Unauthorized'
 components:
   securitySchemes:
     AccessTokenAuth:

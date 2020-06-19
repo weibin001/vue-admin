@@ -142,6 +142,26 @@ const adminRoutes: IRoute[] = [
     ]
   },
   {
+    path: '/table',
+    component: 'Layout',
+    meta: {
+      title: 'Table',
+      icon: 'table',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: '',
+        component: 'components/table',
+        name: 'Table',
+        meta: {
+          title: 'Table',
+          activedMenu: '/table'
+        }
+      }
+    ]
+  },
+  {
     path: 'https://element.eleme.cn/#/zh-CN',
     meta: {
       title: 'ele',

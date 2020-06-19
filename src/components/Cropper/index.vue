@@ -36,13 +36,15 @@ export default class extends Vue {
   @Prop({ type: String }) cropperClass?: string
   @Prop({ type: String }) previewClass?: string
   @Prop({ default: '' }) img!: string
+  @Prop({ default: '' }) fileName?: string
   @Prop({ default: 240 }) autoCropWidth!: string | number
   @Prop({ default: 240 }) autoCropHeight!: string | number
-  @Prop() httpRequest?: Promise<void> | Function
+  @Prop() httpRequest?: Function
 
   // public $refs!: { cropper: any; input: HTMLInputElement }
 
   private nativeImg = this.img
+  private file: File | null = null
 
   private preview = {
     div: {
@@ -72,14 +74,14 @@ export default class extends Vue {
     const files = ev.target ? (ev.target as HTMLInputElement).files : []
     const postFiles = Array.prototype.slice.call(files)
     const file = postFiles[0]
-    console.log(file)
-    if (file) {
+    if (file && window.FileReader) {
       const reader = new FileReader()
       reader.onload = evt => {
         const { target } = evt
         this.nativeImg = (target?.result as string) || ''
       }
       reader.readAsDataURL(file)
+      this.file = file
     }
   }
 
@@ -102,13 +104,8 @@ export default class extends Vue {
   protected upload() {
     this.cropper &&
       this.cropper.getCropBlob((data: Blob) => {
-        console.log(data)
+        this.httpRequest && this.httpRequest(data, this.file)
       })
-    // this.cropper && this.cropper.getCropBlob()
-    // console.log(this.cropper.getCropBlob)
-    // const data = (this.cropper && this.cropper.getCropBlob()) || null
-    // if (!data) return
-    // console.log(data)
   }
 
   private render() {
@@ -144,9 +141,9 @@ export default class extends Vue {
             <el-button type="success" size="small" on-click={this.changeImg}>
               更换图片
               <input
-                on-change={this.change}
                 accept={['.png', '.jpg', '.jpeg']}
                 class="el-upload__input"
+                on-change={this.change}
                 multiple={false}
                 name="avatar"
                 type="file"

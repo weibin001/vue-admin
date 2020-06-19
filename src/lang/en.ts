@@ -11,6 +11,7 @@ export default {
     Markdown: 'Markdown',
     JsonEditor: 'Json Editor',
     Mixins: 'Mixins',
+    Table: 'Table',
     ele: 'ElementUI'
   },
   navbar: {

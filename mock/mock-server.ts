@@ -8,8 +8,11 @@ import path from 'path'
 import yaml from 'yamljs'
 import * as api from './api'
 import { accessTokenAuth } from './security'
+const multer = require('multer')
+const upload = multer({ dest: './static/' })
 
 const app = express()
+app.use(upload.any())
 const port = 8000
 const { connector, summarise } = require('swagger-routes-express')
 
