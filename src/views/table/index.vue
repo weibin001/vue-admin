@@ -19,16 +19,16 @@
     </div>
 
     <div class="table-body-wrapper">
-      <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-        <el-table-column align="center" label="ID" width="80">
-          <template slot-scope="{ row }">
+      <el-table v-loading="listLoading" :data="list" style="width: 100%" row-key="ID">
+        <el-table-column type="index" align="center" label="序号" width="80">
+          <!-- <template slot-scope="{ row }">
             <span>{{ row.id }}</span>
-          </template>
+          </template> -->
         </el-table-column>
 
         <el-table-column width="180px" align="center" label="Date">
           <template slot-scope="{ row }">
-            <span>{{ row.timestamp | parseTime }}</span>
+            <span>{{ row.timestamp | parseTime('YYYY-MM-DD') }}</span>
           </template>
         </el-table-column>
 
@@ -47,17 +47,23 @@
 
         <el-table-column class-name="status-col" label="Status" width="110">
           <template slot-scope="{ row }">
-            <el-tag :type="row.status | articleStatusFilter">
+            <el-tag>
               {{ row.status }}
             </el-tag>
           </template>
         </el-table-column>
 
-        <el-table-column min-width="250px" label="Title">
+        <el-table-column min-width="350px" label="Title" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            <template v-if="row.edit">
-              <el-input v-model="row.title" class="edit-input" size="small" />
-              <el-button class="cancel-btn" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(row)">
+            <template v-if="row.editTitle">
+              <el-input style="width:220px;margin-right:10px" v-model="row.title" class="edit-input" size="small" />
+              <el-button
+                class="cancel-btn"
+                size="small"
+                icon="el-icon-refresh"
+                type="warning"
+                @click="cancelEdit(row, 'title')"
+              >
                 cancel
               </el-button>
             </template>
@@ -68,15 +74,21 @@
         <el-table-column align="center" label="Actions" width="120">
           <template slot-scope="{ row }">
             <el-button
-              v-if="row.edit"
+              v-if="row.editTitle"
               type="success"
               size="small"
-              icon="el-icon-circle-check-outline"
+              icon="el-icon-circle-check"
               @click="confirmEdit(row)"
             >
               Ok
             </el-button>
-            <el-button v-else type="primary" size="small" icon="el-icon-edit" @click="row.edit = !row.edit">
+            <el-button
+              v-else
+              type="primary"
+              size="small"
+              icon="el-icon-edit"
+              @click="row.editTitle = row.editImportance = true"
+            >
               Edit
             </el-button>
           </template>
@@ -132,12 +144,37 @@ export default class extends Vue {
   private async getList() {
     this.listLoading = true
     const { data } = await getArticles(this.params)
-    this.list = data.items.map((item: IArticleData) => ({ ...item, edit: false, originalTitle: item.title }))
+    this.list = data.items.map((item: IArticleData) => ({
+      ...item,
+      // edit: [], //such as [title,importance]
+      editTitle: false,
+      // editImportance: false,
+      originalTitle: item.title
+      // originalImportance: item.importance
+    }))
     this.total = data.total || 0
     // Just to simulate the time of the request
     setTimeout(() => {
       this.listLoading = false
     }, 0.5 * 1000)
+  }
+
+  private cancelEdit(row: any, prop?: string) {
+    if (prop) {
+      const firstCharCase = prop.replace(prop[0], prop[0].toUpperCase())
+      row[prop] = row['original' + firstCharCase]
+      row['edit' + firstCharCase] = false
+      return
+    }
+  }
+
+  private confirmEdit(row: any) {
+    row.editTitle = false
+    row.originalTitle = row.title
+    this.$message({
+      message: 'The title has been edited',
+      type: 'success'
+    })
   }
 }
 </script>
