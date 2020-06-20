@@ -145,17 +145,18 @@ const adminRoutes: IRoute[] = [
     path: '/table',
     component: 'Layout',
     meta: {
-      title: 'Table',
-      icon: 'table',
-      alwaysShow: true
+      // title: 'Table',
+      icon: 'table'
+      // alwaysShow: true
     },
     children: [
       {
         path: '',
-        component: 'components/table',
+        component: 'table/index',
         name: 'Table',
         meta: {
           title: 'Table',
+          icon: 'table',
           activedMenu: '/table'
         }
       }
