@@ -8,7 +8,7 @@ export default {
     premission: 'PremissionManager',
     components: 'Components',
     Tinymce: 'Tinymce',
-    Markdown: 'Markdown',
+    MarkdownEditor: 'Markdown Editor',
     JsonEditor: 'Json Editor',
     Mixins: 'Mixins',
     Table: 'Table',

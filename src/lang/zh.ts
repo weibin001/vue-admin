@@ -8,7 +8,7 @@ export default {
     premission: '权限管理',
     components: '组件',
     Tinymce: '富文本编辑器',
-    Markdown: 'Markdown',
+    MarkdownEditor: 'Markdown编辑器',
     JsonEditor: 'JSON编辑器',
     Mixins: '小组件',
     Table: '表格',

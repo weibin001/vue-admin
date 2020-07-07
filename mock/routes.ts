@@ -113,11 +113,11 @@ const adminRoutes: IRoute[] = [
         }
       },
       {
-        path: '/components/markdown',
-        component: 'components/markdown',
+        path: '/components/markdown-editor',
+        component: 'components/markdown-editor',
         name: 'MarkdownDemo',
         meta: {
-          title: 'Markdown',
+          title: 'MarkdownEditor',
           activedMenu: '/components'
         }
       },
