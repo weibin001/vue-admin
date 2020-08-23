@@ -3,7 +3,7 @@ import { Response, Request } from 'express'
 import { IArticleData, IQuery } from '../src/api/types'
 
 const articleList: IArticleData[] = []
-const articleCount = 100
+const articleCount = 1000
 const mockFullContent =
   '<p>I am testing data, I am testing data.</p><p><img src="https://wpimg.wallstcn.com/4c69009c-0fd4-4153-b112-6cb53d1cf943"></p>'
 
@@ -11,7 +11,7 @@ for (let i = 0; i < articleCount; i++) {
   articleList.push({
     id: i,
     status: faker.random.arrayElement(['published', 'draft']),
-    title: faker.lorem.sentence(6, 10),
+    title: `${i}: ` + faker.lorem.sentence(6, 10),
     abstractContent: faker.lorem.sentences(2),
     fullContent: mockFullContent,
     sourceURL: faker.internet.url(),

@@ -5,10 +5,9 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import 'codemirror/lib/codemirror.css' // codemirror
-import 'tui-editor/dist/tui-editor.css' // editor ui
-import 'tui-editor/dist/tui-editor-contents.css' // editor content
+import '@toast-ui/editor/dist/toastui-editor.css'
 import defaultOptions from './default-options'
-import TuiEditor from 'tui-editor'
+import TuiEditor from '@toast-ui/editor'
 @Component({
   name: 'Markdown'
 })
@@ -16,13 +15,13 @@ export default class extends Vue {
   @Prop({ required: true }) private value!: string
   @Prop({ default: () => 'markdown-editor-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '') })
   private id!: string
-  @Prop({ default: () => defaultOptions }) private options!: tuiEditor.IEditorOptions
+  @Prop({ default: () => defaultOptions }) private options!: toastui.EditorOptions
   @Prop({ default: 'markdown' }) private mode!: string
   @Prop({ default: '300px' }) private height!: string
   // https://github.com/nhnent/tui.editor/tree/master/src/js/langs
   @Prop({ default: 'en_US' }) private language!: string
 
-  private markdownEditor?: tuiEditor.Editor
+  private markdownEditor?: toastui.Editor
 
   get editorOptions() {
     const options = Object.assign({}, defaultOptions, this.options)
@@ -34,8 +33,8 @@ export default class extends Vue {
   @Watch('value')
   private onValueChange(value: string, oldValue: string) {
     if (this.markdownEditor) {
-      if (value !== oldValue && value !== this.markdownEditor.getValue()) {
-        this.markdownEditor.setValue(value)
+      if (value !== oldValue && value !== this.markdownEditor.getMarkdown()) {
+        this.markdownEditor.setMarkdown(value)
       }
     }
   }
@@ -67,16 +66,14 @@ export default class extends Vue {
   private initEditor() {
     const editorElement = document.getElementById(this.id)
     if (!editorElement) return
-    this.markdownEditor = new TuiEditor({
-      el: editorElement,
-      ...this.editorOptions
-    })
+    const options = { el: editorElement, ...editorElement }
+    this.markdownEditor = new TuiEditor(options)
     if (this.value) {
-      this.markdownEditor.setValue(this.value)
+      this.markdownEditor.setMarkdown(this.value)
     }
     this.markdownEditor.on('change', () => {
       if (this.markdownEditor !== undefined) {
-        this.$emit('input', this.markdownEditor.getValue())
+        this.$emit('input', this.markdownEditor.getMarkdown())
       }
     })
   }
@@ -96,13 +93,13 @@ export default class extends Vue {
 
   public setValue(value: string) {
     if (this.markdownEditor) {
-      this.markdownEditor.setValue(value)
+      this.markdownEditor.setMarkdown(value)
     }
   }
 
-  public getValue() {
+  public getMarkdown() {
     if (this.markdownEditor) {
-      return this.markdownEditor.getValue()
+      return this.markdownEditor.getMarkdown()
     }
     return ''
   }

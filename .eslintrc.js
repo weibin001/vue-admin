@@ -41,7 +41,7 @@ module.exports = {
     'vue/brace-style': 'error',
     'vue/camelcase': 0,
     'vue/comma-dangle': 'error',
-    'vue/component-name-in-template-casing': 'error',
+    // 'vue/component-name-in-template-casing': 'error',
     'vue/eqeqeq': 'error',
     'vue/key-spacing': 'error',
     'vue/match-component-file-name': 'error',

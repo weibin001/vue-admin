@@ -10,7 +10,7 @@ module.exports = {
     port: 8080,
     open: 'Chrome', //boolean | string 是否自动打开指定或者默认浏览器
     compress: false, //是否启用gzip压缩
-    progress: false, //关闭进度显示
+    progress: true, //关闭进度显示
     overlay: {
       //是否显示错误或者警告全屏覆盖层
       warnings: false,

@@ -13,6 +13,7 @@ import i18n from '@/lang'
 import '@/icons/components'
 import '@/permission'
 import './pwa/registerServiceWorker'
+import utils from '@/utils/utils'
 import directives from '@/directives'
 import * as filters from '@/filters'
 
@@ -35,6 +36,7 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, (filters as { [key: string]: Function })[key])
 })
 
+Vue.prototype.$utils = utils
 Vue.config.productionTip = false
 
 new Vue({

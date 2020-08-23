@@ -189,6 +189,11 @@ export default class extends Vue {
     return UserModule.accessToken
   }
 
+  protected async syncRequest(val: any) {
+    console.log(val)
+    await new Promise(resolve => setTimeout(() => resolve(), 2000))
+  }
+
   protected upload(file: Blob, oriFile: File) {
     // 若无新上传文件 oriFile为null
     console.log(file, oriFile)
