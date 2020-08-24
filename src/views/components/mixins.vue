@@ -204,7 +204,7 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .hasTagsView {
   .mixin-components-container {
-    min-height: calc(100vh - 84px);
+    min-height: calc(100vh - #{$navbarHeight} - #{$tagsHeight});
   }
 }
 .mixin-components-container {

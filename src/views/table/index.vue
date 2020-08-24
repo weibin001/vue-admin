@@ -204,7 +204,7 @@ export default class extends Vue {
   [x: string]: any
   private params = {
     page: 1,
-    limit: 200,
+    limit: 1000,
     importance: '',
     title: '',
     type: '',
